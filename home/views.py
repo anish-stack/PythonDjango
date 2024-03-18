@@ -21,7 +21,6 @@ import os
 
 # home_function
 @login_required(login_url='/login')
-
 def equipment_view(request):
     equipment_object=AssignEngineer.objects.all()
 
@@ -33,6 +32,8 @@ def equipment_view(request):
 
     return render(request,'equipment-page.html',{'equipment_data':equipment_data})
 
+# home_function
+@login_required(login_url='/login')
 def delete_equipment(request,id):
     try:
         data_to_delete=AssignEngineer.objects.get(id=id)
@@ -44,6 +45,8 @@ def delete_equipment(request,id):
         messages.error(request,'something went wrong')
         return redirect('/equipment-page')
 
+# home_function
+@login_required(login_url='/login')
 def home_view(request):
     all_company=ClientCompanyInfo.objects.all().order_by('-id')
     all_company_length=len(all_company)
