@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Our Managers - Project Management System</title>
+  {% include 'header-links.html' %}
+</head>
+
+<body>
+  {% include 'header.html' %}
+  {% if user.is_authenticated and user.is_superuser %}
+  <section class="nav-section">
+    {% include 'subtitle.html' %}
+    {% include 'message.html' %}
+
+    <div class="breadcum">
+      <div class="flex">
+        <div>
+          <h2>Our Engineers</h2>
+          <p> <a href="/"> Dashboard</a> / Our Managers</p>
+        </div>
+        <div class="assign-engineer-btn p-2">
+          <a href="/add-manager"><i class="fa-regular fa-square-plus"></i> Add Manager</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="assign-engineer-table overflow-auto editable-table" style="background: white;">
+      <div class="row">
+        <div class="col-md-12">
+          <table class="table large-table">
+            <thead>
+              <tr>
+                <th scope="col">Sr.No</th>
+                <th scope="col">Name</th>
+                <th scope="col">Mobile Number</th>
+                <th scope="col">Email</th>
+                <th scope="col">Address</th>
+                <th scope="col">Password</th>
+                <th scope="col">Update</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for i in data.object_list %}
+              <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.first_name}}</td>
+                <td>{{i.user_phone}}</td>
+                <td>{{i.email}}</td>
+                <td>{{i.user_address}}</td>
+                <td>{{i.visible_password}}</td>
+                <td>
+                  <a href="/update-manager/{{i.id}}"><i class="fa-regular fa-pen-to-square"></i></a>
+                  <a href="/delete-manager/{{i.id}}"><i class="fa-solid fa-trash-can-arrow-up"></i></a>
+                </td>
+              </tr>
+              {% endfor %}
+
+            </tbody>
+          </table>
+          <div class="pagination">
+            {%if data.has_previous %} 
+                <a class="btn prev" href="?page={{data.previous_page_number}}">Previous<a> 
+            {% endif %}
+            <span class="num" >{{data.number}}</span> 
+           
+            {%if data.has_next %} 
+                <a class="btn next" href="?page={{data.next_page_number}}">Next</a> 
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+  {% include 'admin-footer.html' %}
+
+  {% include 'footer-links.html' %}
+  {% else %}
+  <script>
+      window.location.href='/page-note-found'
+  </script>
+  {% endif %}
+</body>
+
+</html>

@@ -1,0 +1,338 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    {% include 'header-links.html' %}
+
+<body>
+    {% include 'header.html' %}
+    {% if user.is_authenticated and user.is_superuser %}
+
+    <section class="nav-section">
+        {% include 'subtitle.html' %}
+        {% include 'message.html' %}
+
+    <div class="breadcum">
+        <h2>Project List</h2>
+        <p> <a href="/">  Dashboard</a> / Project Lists</p>
+    </div>
+
+    <div class="row py-2 mb-2 mx-1 project-list" style="background: white;">
+        {% comment %} <form >
+        <div class="col-md-12 mb-2 ">
+            <div class="row">
+                <div class="col-md-3"><h5>Select Engineer : </h5></div>
+                <div class="col-md-3">
+                    <select class="js-example-basic-single" class="form-control" name="get_engineer" >
+                       {% for jl  in all_engineers %}
+                        <option value="{{jl}}">{{jl}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-2"><button type="submit" class="butn">Search</button></div>
+            </div>
+        </div>
+    </form> {% endcomment %}
+    <form >
+        <div class="col-md-12 mb-2">
+            <div class="row mt-2" >
+                <div class="col-md-3"><h5>Select Company : </h5></div>
+                <div class="col-md-3">
+                    <select class="js-example-basic-single" class="form-control" name="get_company">
+                        {% for cl in all_company %}
+                        <option value="{{cl}}">{{cl}}</option>
+                        {% endfor %}
+                     </select>
+                </div>
+                <div class="col-md-2 "><button type="submit" class="butn">Search</button></div>
+               
+                
+            </div>
+            
+        </div>
+    </form>
+    </div>
+{% comment %} 
+    <style>
+        .select2.select2-container.select2-container--default.select2-container--focus{
+            width: 100% !important;
+        }
+    </style> {% endcomment %}
+    <div class="project-list-links">
+        <div class="links p-2">
+            <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                
+                <li class="nav-item" role="presentation" >
+                  <div onclick="back_to_project_list()" class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true"><i class="fa-regular fa-life-ring"></i> All </div>
+                </li>
+            
+                <li class="nav-item" role="presentation">
+                  <div class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false"><i class="fa-brands fa-osi"></i> Doing</div>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <div class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false"><i class="fa-regular fa-circle-check"></i> Done</div>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <div class="nav-link" id="pills-pending-tab" data-bs-toggle="pill" data-bs-target="#pills-pending" role="tab" aria-controls="pills-pending" aria-selected="false"><i class="fa-solid fa-clock-rotate-left"></i> Approval Pending</div>
+                </li>
+            </ul>
+            {% comment %} <div class="create-new-project p-2">
+                <a href="/create-project"><i class="fa-regular fa-square-plus"></i> Create New Project</a>
+            </div> {% endcomment %}
+        </div>
+
+        <!-- --------------------------------------------------------- -->
+
+        <div>
+            <div  class="tab-content project-cards-main mt-4 p-2" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                    <!-- --- All  Work  Done ✅ or Doing 🤘 -->
+                    <div class="project-cards-grid p-3">
+    
+                        {% for i in data %}
+                        <div class="single-project">
+                            <div class="details">
+                                <strong>{{i.visit_purpose}}</strong>
+                                <p>{{i.company_name.company_name}}</p>
+                            </div>
+    
+                            <table>
+                                <tr>
+                            <td>Contact Person</td>
+                            <td class="work-description">{{i.company_name.contact_person}}</td>
+                             </tr>
+                                <tr>
+                            <td>Contact No.</td>
+                            <td class="work-description">{{i.company_name.company_phone}}</td>
+                             </tr>
+                                <tr>
+                            <td>Manager Name</td>
+                            <td class="work-description">{{i.manager_name.first_name}}</td>
+                            </tr>
+                           
+                                <tr>
+                                    <td>Machine Type</td>
+                                    <td>{{i.machine_type}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Address</td>
+                                    <td>{{i.company_name.company_address}}</td>
+                                </tr>
+                                {% comment %} <tr>
+                                    <td>Issues</td>
+                                    <td>30</td>
+                                </tr>
+                                <tr>
+                                    <td>Resolve</td>
+                                    <td>05</td>
+                                </tr> {% endcomment %}
+                            </table>
+                            
+                            {% if i.work_status == "Done" %}
+                                
+                            <div class="box-btns">
+                                <a href="{{i.project_link}}" target="_blank" class="view">View Report <i class="fa-solid fa-eye"></i> </a>
+                                <a href="{{i.download_link}}"  class="down">Download <i class="fa-solid fa-file-arrow-down"></i> </a>
+                                <a href='' id="{{i.project_link}}"  onclick="copyLink(this.id)" class="copy">Copy Link <i class="fa-solid fa-copy"></i> </a>
+                            </div>
+                            <div class="status-done">{{i.work_status}}</div>
+                            {% elif i.work_status == "Pending" %}
+                            <div class="box-btns">
+                                <a href="{{i.project_link}}" target="_blank" class="view">View Report <i class="fa-solid fa-eye"></i> </a>
+                                {% comment %} <a href="" class="down">Approve <i class="fa-solid fa-circle-check"></i> </a> {% endcomment %}
+                                <a href='' id="{{i.project_link}}"  onclick="copyLink(this.id)" class="copy">Copy Link <i class="fa-solid fa-copy"></i> </a>
+                            </div>
+                            <div class="status-pending">{{i.work_status}}</div>
+                            {% elif i.work_status == "Doing" %}
+                            <div class="status-doing">{{i.work_status}}</div>
+                            {% endif %}
+                                
+                            
+        
+                            
+                        </div>
+                        {% endfor %}
+    
+                    </div>
+                    
+
+                </div>
+    
+                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                    <!-- --- Work Has Been Doing  -->
+                    <div class="project-cards-grid p-3">
+    
+                        {% for ij in doing_data %}
+                        <div class="single-project">
+                            <div class="details">
+                                <strong>{{ij.visit_purpose}}</strong>
+                                <p>{{ij.company_name.company_name}}</p>
+                            </div>
+    
+                            <table>
+                                <tr>
+                            <td>Contact Person</td>
+                            <td class="work-description">{{ij.company_name.contact_person}}</td>
+                             </tr>
+                                <tr>
+                            <td>Contact No.</td>
+                            <td class="work-description">{{ij.company_name.company_phone}}</td>
+                             </tr>
+                                <tr>
+                            <td>Manager Name</td>
+                            <td class="work-description">{{ij.manager_name.first_name}}</td>
+                            </tr>
+                           
+                                <tr>
+                                    <td>Machine Type</td>
+                                    <td>{{ij.machine_type}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Address</td>
+                                    <td>{{ij.company_name.company_address}}</td>
+                                </tr>
+                            </table>
+                            <div class="status-doing">{{ij.work_status}}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+    
+                <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                    <!-- --- Work Has Been Done ✅ -->
+                    <div class="project-cards-grid p-3">
+    
+                        {% for ik in done_data %}
+                        <div class="single-project">
+                            <div class="details">
+                                <strong>{{ik.visit_purpose}}</strong>
+                                <p>{{ik.company_name.company_name}}</p>
+                            </div>
+    
+                            <table>
+                                <tr>
+                            <td>Contact Person</td>
+                            <td class="work-description">{{ik.company_name.contact_person}}</td>
+                             </tr>
+                                <tr>
+                            <td>Contact No.</td>
+                            <td class="work-description">{{ik.company_name.company_phone}}</td>
+                             </tr>
+                                <tr>
+                            <td>Manager Name</td>
+                            <td class="work-description">{{ik.manager_name.first_name}}</td>
+                            </tr>
+                           
+                                <tr>
+                                    <td>Machine Type</td>
+                                    <td>{{ik.machine_type}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Address</td>
+                                    <td>{{ik.company_name.company_address}}</td>
+                                </tr>
+                                {% comment %} <tr>
+                                    <td>Issues</td>
+                                    <td>30</td>
+                                </tr>
+                                <tr>
+                                    <td>Resolve</td>
+                                    <td>05</td>
+                                </tr> {% endcomment %}
+                            </table>
+                            <div class="status-done">{{ik.work_status}}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+    
+                <div class="tab-pane fade" id="pills-pending" role="tabpanel" aria-labelledby="pills-pending-tab">
+                    <!-- --- Work Pending -->
+                    <div class="project-cards-grid p-3">
+    
+                        {% for ip in pending_data %}
+                        <div class="single-project">
+                            <div class="details">
+                                <strong>{{ip.visit_purpose}}</strong>
+                                <p>{{ip.company_name.company_name}}</p>
+                            </div>
+    
+                            <table>
+                                <tr>
+                            <td>Contact Person</td>
+                            <td class="work-description">{{ip.company_name.contact_person}}</td>
+                             </tr>
+                                <tr>
+                            <td>Contact No.</td>
+                            <td class="work-description">{{ip.company_name.company_phone}}</td>
+                             </tr>
+                                <tr>
+                            <td>Manager Name</td>
+                            <td class="work-description">{{ip.manager_name.first_name}}</td>
+                            </tr>
+                           
+                                <tr>
+                                    <td>Machine Type</td>
+                                    <td>{{ip.machine_type}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Address</td>
+                                    <td>{{ip.company_name.company_address}}</td>
+                                </tr>
+                                {% comment %} <tr>
+                                    <td>Issues</td>
+                                    <td>30</td>
+                                </tr>
+                                <tr>
+                                    <td>Resolve</td>
+                                    <td>05</td>
+                                </tr> {% endcomment %}
+                            </table>
+                            <div class="status-pending">{{ip.work_status}}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+
+
+
+
+
+        <!-- --------------------- -->
+    </div>
+
+    </section>
+    {% include 'admin-footer.html' %}
+    {% include 'footer-links.html' %}
+    {% else %}
+    <script>
+        window.location.href='/page-note-found'
+    </script>
+    {% endif %}
+    <script>
+        function copyLink(id){
+            var textField = document.createElement('textarea');
+            textField.innerText = id;
+            document.body.appendChild(textField);
+            textField.select();
+            document.execCommand('copy');
+            textField.remove();
+            alert("Link Copied to Clipboard: " + id);
+        }
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.js-example-basic-single').select2();
+        });
+        function back_to_project_list(){
+            window.location.href='/project-lists/'
+        }
+    </script>
+</body>
+
+</html>

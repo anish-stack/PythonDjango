@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add Company - Project Management System</title>
+  {% include 'header-links.html' %}
+  {% if user.is_authenticated and user.is_superuser %}
+</head>
+
+{% include 'header.html' %}
+<body>
+
+  <section class="nav-section">
+    {% include 'subtitle.html' %}
+    {% include 'message.html' %}
+
+    <div class="breadcum">
+        <h2>Add Vendors </h2>
+        <p> <a href="./index.html">  Dashboard</a> / <a href="/manage-vendors">Our Vendors</a> / Add Vendors</p>
+    </div>
+
+    <div class="create-project-form p-3">
+        <form class="row g-3" method="post">
+            {% csrf_token %}
+            <div class="col-md-12">
+                <label for="company-name" class="form-label">Vendor Name</label>
+                <input type="text" class="form-control" name="purchase_company_name" id="company-name" placeholder="Vendor Name" required>
+            </div>
+            <div class="col-md-6">
+                <label for="mobile-number" class="form-label">Mobile Number</label>
+                <input type="text" required name="purchase_company_phone"  title="Please Enter Valid Phone Number" pattern="[6789][0-9]{9}" class="form-control" id="mobile-number" placeholder="Mobile Number*" >
+            </div>
+            <div class="col-md-6">
+                <label for="contact-person" class="form-label">Contact Person</label>
+                <input type="text" name="purchase_contact_person" class="form-control" id="contact-person" placeholder="Contact Person*" required>
+            </div>
+            <div class="col-md-6">
+                <label for="inputEmail4" class="form-label">Email Id</label>
+                <input type="email" class="form-control" name="purchase_company_email" id="inputEmail4" placeholder="Email Id" required>
+            </div>
+            <div class="col-md-6">
+                <label for="gstnumber" class="form-label">GST Number</label>
+                <input type="text"  class="form-control" name="purchase_company_gst" id="gstnumber" placeholder="Enter Your GST number" required>
+            </div>
+            <div class="col-12">
+              <label for="inputAddress" class="form-label">Address*</label>
+              <input type="text" class="form-control" name="purchase_company_address" id="inputAddress" placeholder="Enter Your Address" required>
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn">Add Vendor</button>
+                <a href="/add-vendors" class="btn btn-primary">Reset</a>
+                <a href="/purchase-company">
+                  <a href="/purchase-company" class="btn btn-danger">
+                    Cancle
+                  </a>
+                </a>
+            </div>
+        </form>
+    </div>
+
+  </section>
+  {% include 'admin-footer.html' %}
+  
+  {% include 'footer-links.html' %}
+  {% else %}
+  <script>
+      window.location.href='/page-note-found'
+  </script>
+  {% endif %}
+</body>
+
+</html>

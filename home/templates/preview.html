@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    {% include 'header-links.html' %}
+</head>
+
+<body>
+    {% include 'header.html' %}
+
+    <section class="nav-section">
+        {% include 'subtitle.html' %}
+        {% include 'message.html' %}
+
+        <div class="breadcum">
+            <h2>Report Of Project </h2>
+            <h4 class=""></h4>
+        </div>
+
+        <div class="overflow-auto">
+            <div class="field-service-report p-2 mt-5 large-table">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h2 >Field Service Report</h2>
+                    </div>
+
+                    <div class="row w-100">
+                        <div class="col-6">
+                            <table>
+                                <tr>
+                                    <th>Customer Name : </th>
+                                    <td>{{compeleted_project.project.company_name}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Address : </th>
+                                    <td>{{compeleted_project.project.company_name.company_address}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Contact Person : </th>
+                                    <td>Mr. {{compeleted_project.project.company_name.contact_person}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Contact Number : </th>
+                                    <td>{{compeleted_project.project.company_name.company_phone}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Email Address : </th>
+                                    <td>{{compeleted_project.project.company_name.company_email}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-6">
+                            <table>
+                                <tr>
+                                    <th>Date : </th>
+                                    <td>{{compeleted_project.project.ending_date }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Machine Type : </th>
+                                    <td>{{compeleted_project.project.machine_type}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Emambit Engineer : </th>
+                                    <td>Mr. {{compeleted_project.project.manager_name.first_name}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Phone Number : </th>
+                                    <td>{{compeleted_project.project.manager_name.email}}</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </div>
+    
+    
+                    <div class="col-12">
+                        <div class="scheduling">
+                            <h3><span>Purpose / Type of Visit</span> : - {{compeleted_project.project.visit_purpose}}</h3>
+    
+                            <table id="report-row-table" >
+                                <thead>
+                                    <tr>
+                                        <th>Day</th>
+                                        <th>Visit Date</th>
+                                        <th>Starting Time</th>
+                                        <th>Ending Time</th>
+                                        <th>Total Hours</th>
+                                        <th>Work Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for report in project_report_data %}
+                                    <tr>
+                                        
+                                        <td>Day {{report.day_count}}</td>
+                                        <td>{{report.report_date}}</td>
+                                        <td>{{report.starting_time}}</td>
+                                        <td>{{report.ending_time}}</td>
+                                        <td>{{report.total_hours}}</td>
+                                        <td>{{report.description}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            
+                            <!-- -- Project Complition Details  -->
+                            <h4 class="mt-5">Project Completion Details</h4>
+
+                            <p>{{compeleted_project.project_description}}</p>
+                            <!-- -- Gallery Grid  -->
+                            <h5 class="mt-5 mb-2">Project Image</h5>
+                            
+                            <div class="product-gallery-grid">
+                                 {% for project_image in project_images %}
+                                <img style="max-height: 250px;" src="{{project_image.image.url}}" alt="">
+                                {% endfor %}
+                                
+                            </div>
+    
+                        </div>
+    
+                    </div>
+                </div>
+                <form  method="post">
+                    {% csrf_token %}
+
+                            <div class="row table-lines mt-5">
+                                
+                            
+                            {% if not user.is_authenticated %}
+                                
+                                
+                                
+                                    {% if not compeleted_project.customer_remark %}                                        
+                                    <p>Please Give Your Remark</p>
+                                    <div class="col-md-12 mb-2">
+                                        <div class="form-floating">
+                                            <textarea class="form-control" placeholder="Customer Remark" id="floatingTextarea" name="customer_remark" required></textarea>
+                                            <label for="floatingTextarea">Customer Remark</label>
+                                        </div>
+                                    </div>
+                                    {% else %}
+                                    <div class="col-md-12 mb-2">
+                                        <div class="form-floating">
+                                            <textarea class="form-control" placeholder="Customer Remark" id="floatingTextarea" name="customer_remark" requiredv readonly>{{compeleted_project.customer_remark}}</textarea>
+                                            <label for="floatingTextarea">Customer Remark</label>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                            {% endif %}
+                            {% if  user.is_authenticated and "/download-pdf" not in  request.path  %}
+                            <div class="col-md-12 mb-2">
+                                <div class="form-floating">
+                                    <textarea class="form-control" placeholder="Customer Remark" id="floatingTextarea" name="customer_remark" required readonly>{{compeleted_project.customer_remark}}</textarea>
+                                    <label for="floatingTextarea">Customer Remark</label>
+                                </div>
+                            </div>
+                                
+                                {% endif %}
+                                {% if "/download-pdf" in  request.path   %}
+                                <div class="col-md-12 mb-2">
+                                    <div class="form-floating">
+                                        <textarea class="form-control" placeholder="Customer Remark" id="floatingTextarea" name="customer_remark" required readonly>{{compeleted_project.customer_remark}}</textarea>
+                                        <label for="floatingTextarea">Customer Remark</label>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                {% comment %} {% endif %}  {% endcomment %}
+                    
+                                <div class="col-md-12">
+                                    <table>
+                                        <tr>
+                                            <th>Emambit Engineer</th>
+                                            <th>Customer Representative</th>
+                                            <th>Date :</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Mr. {{compeleted_project.project.manager_name}}</td>
+                                            <td>Mr. {{compeleted_project.project.company_name.contact_person}}</td>
+                                            <td>{{compeleted_project.project.ending_date}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Engineer Number</th>
+                                            <th>Customer Number</th>
+                                            <th>Place :</th>
+                                        </tr>
+                                        <tr>
+                                            <td>{{compeleted_project.project.manager_name.user_phone}}</td>
+                                            <td>{{compeleted_project.project.company_name.company_phone}}</td>
+                                            <td>{{compeleted_project.project.company_name.company_address}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        
+
+                    <center>
+                        {% comment %} <div class="download-pdf" onclick="print()">
+                            <i class="fa-solid fa-file-pdf"></i> Download Pdf
+                        </div>
+
+                        <a href="mailto:" target="_blank"><div class="download-pdf" style="background: #db261f;">
+                            Share to mail &nbsp; <i class="fa-solid fa-share"></i>
+                        </div>
+                        </a> {% endcomment %}
+                        
+                        {% if   '/download-pdf' not in request.path and not user.is_authenticated and not compeleted_project.customer_remark %}
+                            <div class="mt-2 py-5 bg-body">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        {% endif %}
+                    </center>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    {% if '/download-pdf' not in request.path %}
+        
+    
+    {% include 'admin-footer.html' %}
+    {% endif %}
+
+    {% include 'footer-links.html' %}
+
+    <style>
+        
+
+        @media print {
+
+            nav, .breadcum{
+                display: none;
+            }
+
+            .logout{
+                display: none ; !important
+            }
+            .sidebar.close ,.sidebar.open {
+                width: 0px;
+                display: none;
+              }
+              .sidebar.close~.nav-section {
+                left: 0px;
+                width: 100%;
+              }
+              .sidebar{
+                display: none;
+              }
+              .nav-section .nav-content .bx-menu {
+                display: none;
+              }
+              .nav-section {
+                position: relative;
+                background: #E4E9F7;
+                min-height: 100vh;
+                left: 0px;
+                width: 100%;
+                transition: all 0.5s ease;
+            }
+            table{
+                max-width: 100% !important;
+            }
+            .performa-invoice.p-2.py-5.large-table{
+                overflow: hidden;
+              }
+
+            /* Apply styles for printing */
+            body {
+              zoom: 70%; /* Set zoom level to 50% */
+              overflow-x: hidden !important;
+            }
+            html , .row.table-lines.mt-5{
+                overflow-x: hidden;
+            }
+            .btn-primary{
+                display: none !important;
+            }
+            .mt-2.py-5.bg-body{
+                display: none !important;
+            }
+
+            body::-webkit-scrollbar {
+                display: none;
+              }
+              
+              /* Hide scrollbar for IE, Edge and Firefox */
+              body {
+                -ms-overflow-style: none;  /* IE and Edge */
+                scrollbar-width: none;  /* Firefox */
+
+              }
+              .field-service-report.text-center {
+                background: rgb(125, 176, 217);
+                color: white;
+                text-decoration: underline;
+                width: 98%;
+                margin: auto;
+                margin-bottom: 1rem;
+            }
+
+            @page {
+                size: auto; /* Set page size to auto */
+                margin: 0; /* Remove default margin */
+                counter-increment: none; /* Remove page number */
+              }
+        }
+    </style>
+    
+    {% if "/download-pdf" in  request.path   %}
+        
+  
+        
+    
+    <script>
+        function printPage() {
+            window.print(); // Initiate the print operation
+        }
+        printPage()
+    </script>
+    {% endif %}
+</body>
+
+</html>

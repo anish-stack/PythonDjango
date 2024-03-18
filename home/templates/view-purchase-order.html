@@ -1,0 +1,327 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Create Order</title>
+  {% include 'header-links.html' %}
+</head>
+
+<body>        
+    {% include 'header.html' %}
+
+
+{% if user.is_authenticated and user.is_superuser %}
+  <section class="nav-section">
+        <div class="overflow-auto">
+            <div class="performa-invoice p-2 py-5 large-table">
+                <div class="row">
+                    <div class="col-12 text-end mb-2">
+                        <h2>Purchase Order</h2>
+                    </div>
+                    <div class="col-6">
+                        <img src="/static/assets/images/logo.png" alt="">
+                        <a href="javascript:void(0)" class="link" style="padding-left: 0.5rem;">GST /  {{data.purchase_company.purchase_gst}}</a>
+                    </div>
+                    <div class="col-6">
+                        <table class="border-table">
+                            <tr>
+                                <th>Date</th>
+                                <td class="p-0"><input  type="text" value="{{data.order_date}}" class="form-control px-3" name="order_date" readonly></td>
+                            </tr>
+                            <tr>
+                                <th>PO No </th>
+                                <td class="p-0" ><input  type="text" value="{{data.order_no}}" class="form-control px-3" name="order_no" readonly></td>
+                            </tr>
+                            <tr>
+                                <th>QUOTATION NO.</th>
+                                <td class="p-0" ><input type="text" class="form-control px-3" value="00{{data.quotation_no}}" name="quotation_no" readonly></td>
+                            </tr>
+                            <tr>
+                                <th>Ref#</th>
+                                <td class="p-0" ><input type="text" class="form-control" value="{{data.refrence}}"  name="refrence"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="mt-4"></div>
+                    <div class="col-6">
+                        <div class="table-box">
+                            <div class="table-head">Customer : </div>
+                            <p class="bold">{{data.purchase_company.purchase_name}}</p>
+                            <p class="bold">{{data.purchase_company.purchase_address}}</p>
+                            <p class="bold">Contact Person:-{{data.purchase_company.purchase_phone}}</p>
+                            <p><u>Mob.- {{data.purchase_company.purchase_person}}</u></p>
+                            <p><a href="">{{data.purchase_company.purchase_email}}</a></p>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="table-box borded">
+                            <div class="table-head" style="color: white;background: #004269;">Quote/Project Description </div>
+                            <p><input type="text" id="purpose" value="{{data.project_description}}" placeholder="Quote/Project Description*" readonly></p>
+                        </div>
+                        <div class="table-box borded">
+                            <div class="table-head">Term & Conditions:</div>
+                            <p><input type="text" id="purpose" value="{{data.terms_condition}}" placeholder="Term & Conditions:*" readonly></p>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="description-table">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                <tr>
+                                    <th scope="col-8">Description</th>
+                                    <th scope="col-1">Rate</th>
+                                    <th scope="col-1">Quit</th>
+                                    <th scope="col-2">Total (IN INR)</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row"><input type="text" value="{{data.order_description}}" ></th>
+                                        <td><input type="number" value="{{data.rate}}" ></td>
+                                        <td><input type="number" value="{{data.quantity}}" ></td>
+                                        <td><input type="number" value="{{data.subtotal}}" readonly></td>
+                                    </tr>
+
+                                    
+                                <tr>
+                                    <th scope="row"></th>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"></th>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"></th>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"></th>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"></th>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"></th>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"></th>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <table class="table-box borded">
+                            <tr>
+                                <th class="table-head" colspan="2">BANK DETAIL : </th>
+                            </tr>
+                            <tr>
+                                <th scope="row">BANK NAME : </th>
+                                <td>HDFC Bank Limited</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">A/C NO. : </th>
+                                <td>50200053060692</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">IFS CODE : </th>
+                                <td>HDFC0000329, Vashundhara Enclave, Delhi -110096</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">SWIFT CODE : </th>
+                                <td>HDFCINBB</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-4">
+                        <table class="border-table">
+                            <tr>
+                                <th>Subtotal INR</th>
+                                <td >{{data.subtotal}}</td>
+                            </tr>
+                            <tr>
+                                <th>Discount %</th>
+                                <td><input type="number" value="{{data.discount}}" readonly></td>
+                            </tr>
+                            <tr>
+                                <th>GST%</th>
+                                <td><input type="number" value="{{data.gst_percent}}" readonly></td>
+                            </tr>
+                            <tr>
+                                <th>GST INR</th>
+                                <td><input type="number" value="{{data.gst_amount}}" readonly></td>
+                            </tr>
+                            <tr>
+                                <th>Total INR</th>
+                                <td><input type="number" value="{{data.final_amount}}" readonly></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-12 text-center">
+                        <div><small>Above information is not an invoice and only an estimate of services/goods described above.</small></div>
+                        <div><small>Payment will be collected in prior to provision of services/goods described in this quote.</small></div>
+        
+                        <div class="mt-5"><strong>Thank you for your business!</strong></div>
+                        <div class="address">
+                            <p>EMAMBIT PRIVATE LIMITED</p>
+                            <p>TOWER-B,UNIT NO:- B-06. GROUND FLOOR,LOGIX TECHNOVA ,IT/ITES BUILDING</p>
+                            <p>PLOT NO-4, SECTOR-132,NOIDA,UTTAR PRADESH-201304,</p>
+                            <p>Phone No. +91-9811226914, Email: accounts@emambit.com Web: www.emambit.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+  </section>
+            {% if not 'download-order-report' in request.path %}
+            {% include 'admin-footer.html' %}
+
+            {% endif %}
+  {% include 'footer-links.html' %}
+  {% else %}
+  
+
+    
+  <script>
+      window.location.href='/page-note-found'
+  </script>
+  {% endif %}
+{% if 'download-order-report' in request.path %}
+  <script>
+    function printPage() {
+        window.print(); // Initiate the print operation
+      }
+      
+      printPage()
+</script>
+{% endif %}
+
+<style>
+        
+
+    @media print {
+        input{
+            border: none;
+            outline: none;
+        }
+        .table-box .table-head {
+            background: var(--color-dark-blue);
+            color: white;
+            font-weight: 600;
+            padding-left: 0.5rem;
+        }
+
+        nav, .breadcum{
+            display: none;
+        }
+
+        .logout{
+            display: none ; !important
+        }
+        .sidebar.close ,.sidebar.open {
+            width: 0px;
+            display: none;
+          }
+          .sidebar.close~.nav-section {
+            left: 0px;
+            width: 100%;
+          }
+          .sidebar{
+            display: none;
+          }
+          .nav-section .nav-content .bx-menu {
+            display: none;
+          }
+          .nav-section {
+            position: relative;
+            background: #E4E9F7;
+            min-height: 100vh;
+            left: 0px;
+            width: 100%;
+            transition: all 0.5s ease;
+        }
+        table{
+            max-width: 100% !important;
+        }
+
+
+        /* Apply styles for printing */
+        body {
+          zoom: 70%; /* Set zoom level to 50% */
+          overflow-x: hidden !important;
+        }
+        html , .row.table-lines.mt-5{
+            overflow-x: hidden;
+        }
+        .btn-primary{
+            display: none !important;
+        }
+        .mt-2.py-5.bg-body{
+            display: none !important;
+        }
+
+        body::-webkit-scrollbar {
+            display: none;
+          }
+          
+          /* Hide scrollbar for IE, Edge and Firefox */
+          body {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+
+          }
+          .performa-invoice.p-2.py-5.large-table{
+            overflow: hidden;
+          }
+          .field-service-report.text-center {
+            background: rgb(125, 176, 217);
+            color: white;
+            text-decoration: underline;
+            width: 98%;
+            margin: auto;
+            margin-bottom: 1rem;
+        }
+
+        @page {
+            size: auto; /* Set page size to auto */
+            margin: 0; /* Remove default margin */
+            counter-increment: none; /* Remove page number */
+          }
+          /* Hide scrollbar for Chrome, Safari and Opera */
+        body::-webkit-scrollbar {
+            display: none;
+        }
+        body {
+            overflow: hidden; /* Hide scrollbars */
+          }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        body {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    }
+</style>
+</body>
+
+</html>

@@ -1,0 +1,505 @@
+/*  total-projects */
+
+.total-project-table table tr th,
+.total-project-table table tr td {
+    /* width: 10%; */
+    border-top: 1px solid var(--main-bg);
+    border-bottom: 1px solid var(--main-bg);
+    padding: 0.6rem 0;
+}
+
+.total-project-table table tr th:first-child,
+.total-project-table table tr td:first-child {
+    width: 5%;
+}
+
+.total-project-table table tr th:last-child {
+    width: 10%;
+}
+
+
+.total-projects .add-report-btn {
+    background: red;
+    padding: 0.3rem;
+    color: white;
+}
+
+.total-projects .down-pdf-btn,
+.edit-invoice-btn  {
+    background: green;
+    padding: 0.3rem;
+    color: white;
+}
+
+.edit-invoice-btn {
+    background: var(--color-blue);
+    color: white;
+}
+
+.edit-invoice-btn:hover {
+    color: white;
+}
+
+/* ------- Add Report ---  */
+.scheduling table tr th,
+.scheduling table tr td {
+    border: 1px solid var(--light-white-p);
+    padding: 0.5rem;
+}
+
+.scheduling table tr th:first-child,
+.scheduling table tr td:first-child {
+    width: 6%;
+}
+
+.scheduling table tr th:last-child,
+.scheduling table tr td:last-child {
+    width: 30%;
+}
+
+
+.add-report-data table tr td {
+    border: 1px solid var(--light-white-p);
+    padding: 0rem;
+}
+
+.add-report-data table tr td:first-child {
+    width: 5%;
+}
+
+.add-report-data table tr td:nth-child(2) {
+    width: 10vw;
+}
+
+.add-report-data table tr td:last-child {
+    width: 30%;
+}
+
+.add-report-data table tr td input,
+.add-report-data table tr td textarea {
+    width: 100%;
+    border: none;
+    outline: none;
+}
+
+
+.add-row-btn {
+    background: var(--color-green);
+    display: inline-block;
+    float: right;
+    cursor: pointer;
+    color: white;
+    padding: 12px 15px;
+}
+
+.preview-btn {
+    background: var(--color-green);
+    padding: 12px 15px;
+    margin: auto;
+    display: inline-block;
+    float: right;
+    color: white;
+    border: none;
+    outline: none;
+}
+
+
+
+
+/* --- Preview [Page]   */
+
+.scheduling h4 {
+    text-decoration: underline;
+}
+
+.product-gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.table-lines table tr td,
+.table-lines table tr th {
+    border: 2px solid var(--light-white-p);
+    padding: 0.2rem;
+}
+
+.download-pdf {
+    background: var(--color-green);
+    color: white;
+    margin: auto;
+    margin-top: 2rem;
+    display: inline-block;
+    padding: 1rem;
+    cursor: pointer;
+}
+
+
+/* --- performa-invoice [page] --  */
+.performa-invoice {
+    background: white;
+}
+
+.performa-invoice h2 {
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--color-dark-blue);
+}
+
+.border-table tr th,
+.border-table tr td {
+    border: 1px solid var(--light-white-p);
+    padding-left: 0.5rem;
+}
+
+.table-box {
+    margin-bottom: 1rem;
+}
+
+.table-box.borded {
+    border: 1px solid black;
+}
+
+.table-box.borded th {
+    padding-left: 0.5rem;
+}
+
+.table-box .table-head {
+    background: var(--color-dark-blue);
+    color: white;
+    font-weight: 600;
+    padding-left: 0.5rem;
+}
+
+.table-box p {
+    margin-bottom: 0rem;
+    padding-left: 0.5rem;
+}
+
+.table-box .bold {
+    font-weight: 500;
+}
+
+.description-table thead th {
+    color: white;
+    background: var(--color-dark-blue);
+    border-right: 2px solid white;
+}
+
+.description-table tbody td,
+.description-table tbody th {
+    border-right: 2px solid white;
+}
+
+.description-table thead th:nth-child(1) {
+    width: 50%;
+}
+
+.description-table thead th:last-child {
+    width: 14%;
+}
+
+.address p {
+    margin-bottom: 0rem;
+}
+
+
+
+/* ------- Invoices [Page] ----  */
+
+.invoice-table table tr th,
+.invoice-table table tr td {
+    /* width: 10%; */
+    border-top: 1px solid var(--main-bg);
+    border-bottom: 1px solid var(--main-bg);
+    padding: 0.6rem 0;
+}
+
+.invoice-table table tr th:first-child,
+.invoice-table table tr td:first-child {
+    width: 5%;
+}
+
+/* .invoice-table table tr th:last-child{
+    width: 18%;
+} */
+
+/* --- Create Invoice [Page] ---  */
+.performa-invoice input {
+    width: 98%;
+    padding: 0.2rem 0rem;
+    margin: 0.5rem 0.2rem;
+}
+
+
+
+
+
+
+/* ------- USER [PAGE]  ---  */
+.user-profile .bold {
+    font-size: 1.6rem;
+}
+
+.user-profile .table-box p {
+    margin-bottom: 1rem;
+}
+
+.user-profile .User-Img {
+    width: 70px;
+    height: 70px;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    margin: auto;
+    border-radius: 50%;
+}
+
+.user-profile input[type="submit"] {
+    padding: 5px;
+    border: none;
+    outline: none;
+    font-size: 1.2rem;
+    display: inline-block;
+    float: right;
+    color: white;
+    background: var(--color-green);
+}
+
+
+
+
+
+.attendance-start-time {
+    padding: 0.5rem 1rem;
+    background: var(--color-green);
+    color: white;
+    border: none;
+    outline: none;
+}
+
+/* CSS */
+.button-82-pushable {
+    position: relative;
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    outline-offset: 4px;
+    transition: filter 250ms;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.button-82-shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background: hsl(0deg 0% 0% / 0.25);
+    will-change: transform;
+    transform: translateY(2px);
+    transition:
+        transform 600ms cubic-bezier(.3, .7, .4, 1);
+}
+
+.button-82-edge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background: linear-gradient(to left,
+            hsl(340deg 100% 16%) 0%,
+            hsl(340deg 100% 32%) 8%,
+            hsl(340deg 100% 32%) 92%,
+            hsl(340deg 100% 16%) 100%);
+} 
+
+.button-82-front {
+    display: block;
+    position: relative;
+    padding: 0.5rem 27px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    color: white;
+    background: hsl(345deg 100% 47%);
+    will-change: transform;
+    transform: translateY(-4px);
+    transition: transform 600ms cubic-bezier(.3, .7, .4, 1);
+}
+
+@media (min-width: 768px) {
+    .button-82-front {
+        font-size: 1.25rem;
+        /* padding: 12px 42px; */
+    }
+}
+
+.button-82-pushable:hover {
+    filter: brightness(110%);
+    -webkit-filter: brightness(110%);
+}
+
+.button-82-pushable:hover .button-82-front {
+    transform: translateY(-6px);
+    transition: transform 250ms cubic-bezier(.3, .7, .4, 1.5);
+}
+
+.button-82-pushable:active .button-82-front {
+    transform: translateY(-2px);
+    transition: transform 34ms;
+}
+
+.button-82-pushable:hover .button-82-shadow {
+    transform: translateY(4px);
+    transition: transform 250ms cubic-bezier(.3, .7, .4, 1.5);
+}
+
+.button-82-pushable:active .button-82-shadow {
+    transform: translateY(1px);
+    transition: transform 34ms;
+}
+
+.button-82-pushable:focus:not(:focus-visible) {
+    outline: none;
+}
+
+
+
+
+
+
+/* ---------- Login [Page]  ------  */
+.user-login{
+    background: #f3f8fe;
+    border-radius: 15px;
+}
+.user-login img{
+    width: 40%;
+}
+.user-login form{
+    width: 50%;
+    margin: auto;
+}
+.user-login .single-field{
+    background: white;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    align-items: start;
+    padding: 0.5rem 1rem;
+    border-radius: 15px;
+    gap: 0.5rem;
+    width: 100%;
+}
+.user-login .single-field>div{
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    align-items: center;
+}
+.user-login .single-field input{
+    width: 98%;
+    border: none;
+    outline: none;
+}
+
+.login-submit-btn{
+    color: white;
+    border: none;
+    outline: none;
+    background: #3d4584;
+    border-radius: 50rem;
+    padding: 0.5rem 1rem;
+    width: 50%;
+    margin-bottom: 1rem;
+    font-weight: 500;
+    transition: all 400ms ease-in;
+}
+.login-submit-btn:hover{
+    background: #3d4584db;
+}
+.forget a{
+    text-decoration: underline !important;
+    color: black;
+}
+.single-field.main-otp-div{
+    padding: 0rem 0rem;
+    background: transparent !important;
+    margin-bottom: 0rem;
+    float: left;
+}
+.get-otp-btn{
+    color: white;
+    border: none;
+    outline: none;
+    background: #3d4584;
+    border-radius: 10px;
+    padding: 0.5rem 1rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+    transition: all 400ms ease-in;
+    display: block;
+    float: right;
+}
+
+@media only screen and (max-width: 800px){
+    .user-login img {
+        width: 60%;
+    }
+    .user-login form {
+        width: 80%;
+        margin: auto;
+    }
+}
+@media only screen and (max-width: 500px){
+    .user-login img {
+        width: 100%;
+    }
+    .user-login form {
+        width: 100%;
+        margin: auto;
+    }
+}
+
+
+/* -------- Reimburesment ---  */
+.description-table.reimburement-table thead th:nth-child(1) {
+    width: auto;
+}
+.signature-table tr th,
+.signature-table tr td{
+    width: 25%;
+    padding-bottom: 1rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

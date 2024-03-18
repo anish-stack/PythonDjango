@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    {% include 'header-links.html' %}
+</head>
+
+<body>
+    {% include 'header.html' %}
+    {% if user.is_authenticated %}
+
+  <section class="nav-section">
+    {% include 'subtitle.html' %}
+    {% include 'message.html' %}
+
+    <div class="breadcum">
+        <div>
+            <h2>User Profile</h2>
+            <p> <a href="/">  Dashboard</a> / Profile</p>
+        </div>
+    </div>
+    
+    <div class="row p-2 p-md-5 user-profile" style="background: #f3f8fe;">
+        <div class="col-12 text-center my-2" style="background: rgb(125, 176, 217);color:white">
+            <h2>Your Profile</h2>
+        </div>
+        <div class="col-md-6">
+            <div class="table-box"> 
+                <div class="row">
+                    <div class="col-md-8 col-12">
+                        <p class="bold">Mr. {{user_data.first_name}}</p>
+                    </div>
+                    <div class="col-md-12 col-12 ">
+                        <p>Email Id : {{user_data.email}}</p>
+                        <p>Phone Number : {{user_data.user_phone}}</p>
+                        <p>Address : {{user_data.user_address}}</p>
+                    </div>
+                    <div class="col-12">
+                        <a class="btn btn-success" href="/logout">Log Out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            {% comment %} <form class="row g-2">
+                <div class="col-md-12">
+                    <!-- <label for="purpose" class="form-label">Your Name</label> -->
+                    <input type="text" class="form-control" id="name" placeholder="Your Name">
+                </div>
+                <div class="col-md-12">
+                    <input type="email" class="form-control" id="email" placeholder="Email id">
+                </div>
+                <div class="col-md-12">
+                    <input type="number" class="form-control" id="mob_number" placeholder="Phone Number">
+                </div>
+                <div class="col-md-12">
+                    <input type="text" class="form-control" id="email" placeholder="Address">
+                </div>
+                <div class="col-12">
+                    <input type="submit" value="Update">
+                </div>
+            </form> {% endcomment %}
+            
+        </div>
+    </div>
+
+  </section>
+
+  {% include 'user-footer.html' %}
+  {% include 'footer-links.html' %}
+  {% else %}
+    <script>
+        window.location.href='/page-note-found'
+    </script>
+    {% endif %}
+</body>
+
+</html>

@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8" />
+  {% include 'header-links.html' %}
+</head>
+
+<body>
+  {% include 'header.html' %}
+  {% if user.is_authenticated and user.is_superuser %}
+  <section class="nav-section">
+    {% include 'subtitle.html' %}
+    {% include 'message.html' %}
+
+    <div class="breadcum">
+        <h2>Assign Engineer </h2>
+        <p> <a href="/">  Dashboard</a> / <a href="/manage-engineer">  Our Engineers</a> / Assign Engineer</p>
+    </div>
+
+    <div class="assign-engineer p-3">
+        <form class="row g-3" method="post" >
+          {% csrf_token %}
+            <div class="col-md-4">
+              <label for="selectGender" class="form-label">Select Your Company</label>
+              <select class="js-example-basic-single" name="company" class="form-select" name="state">
+              
+                {% for com in companydata %}
+                <option value="{{com}}">{{com.company_name}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label for="selectGender" class="form-label">Select Your Manager</label>
+              <select class="js-example-basic-single" name="manager_name" class="form-select" name="state">
+                {% for mng in managers  %}
+                <option value="{{mng}}">{{mng.first_name}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label for="selectGender" class="form-label">Select Engineer 1</label>
+              <select class="js-example-basic-single" name="engineer_one" class="form-select" name="state">
+                <option >Select 1st Eng.</option>
+                {% for eng in engineers  %}
+                <option value="{{eng}}">{{eng.first_name}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label for="selectGender" class="form-label">Select Engineer 2</label>
+              <select class="js-example-basic-single" name="engineer_two" class="form-select" name="state">
+                <option >Select 2nd Eng.</option>
+                {% for eng in engineers  %}
+                <option value="{{eng}}">{{eng.first_name}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label for="selectGender" class="form-label">Select Engineer 3</label>
+              <select class="js-example-basic-single" name="engineer_three" class="form-select" name="state">
+                <option >Select 3rd Eng.</option>
+                {% for eng in engineers  %}
+                <option value="{{eng}}">{{eng.first_name}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label for="purpose" class="form-label">Purpose / Type of Visit *</label>
+              <input type="text" class="form-control" name="visit_purpose" id="purpose" placeholder="Enter the Purpose" required>
+            </div>
+            <div class="col-md-4">
+              <label for="selectGender" class="form-label">Machine Type</label>
+              <input type="text" name="machine_type" class="form-control" required>
+            </div>
+            <div class="col-md-4">
+              <label for="Departure" class="form-label">Leave Date*</label>
+              <input type="datetime-local" name="leave_date" class="form-control" id="purpose" placeholder="Enter the Purpose" required>
+            </div>
+            <div class="col-md-4">
+              <label for="Departure" class="form-label">Reach Date*</label>
+              <input type="datetime-local" name="reach_date" class="form-control" id="purpose" placeholder="Enter the Purpose" required>
+            </div>
+            <div class="col-md-4">
+              <label for="selectGender" class="form-label">Travel By</label>
+              <select id="inputState" name="travel" class="form-select" required>
+                {% for travel in travel_by_data %}
+                <option value="{{travel.travel_by}}">{{travel.travel_by}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="row mb-5 mt-3">
+              <div class="col-md-12 text-center create-project-form" style="background: transparent;">
+                  <button type="submit" class="btn" >SAVE</button>
+                  <a href="/" class="btn btn-warning">RESET</a>
+                  <a href="/manage-engineer"><button type="button" class="btn btn-danger" >CANCEL</button></a>
+              </div>
+            </div>
+        </form>
+    </div>
+
+   
+
+
+  </section>
+  {% include 'admin-footer.html' %}
+  {% include 'footer-links.html' %}
+
+ <script>
+  $(document).ready(function() {
+    $('.js-example-basic-single').select2();
+  });
+
+ </script>
+ {% else %}
+    <script>
+        window.location.href='/page-note-found'
+    </script>
+    {% endif %}
+
+    
+    <style>
+      .bgc{
+        background-color: #efefef;
+        color: black;
+      }
+    </style>
+</body>
+
+</html>

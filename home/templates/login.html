@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>User Login</title>
+  {% include 'header-links.html' %}
+</head>
+
+<body>
+    {% include 'header.html' %}
+  <section class="nav-section">
+    {% include 'subtitle.html' %}
+    {% include 'message.html' %}
+    
+    <div class="row user-login mx-1">
+        <div class="col-md-12 text-center">
+            <img src="../static/assets/images/bg-logo.png" width="50%" alt="company-logo">
+        </div>
+        <div class="col-12 text-center">
+            <form method="post">
+                {% csrf_token %}
+                <div class="single-field">
+                    <label for="user-email">Email Address</label>
+                    <div>
+                        <i class="fa-regular fa-envelope"></i>
+                        <input type="email" placeholder="Username@gmail.com" name="email" required id="user-email">
+                    </div>
+                </div>
+                <div class="single-field">
+                    <label for="user-password">Password</label>
+                    <div>
+                        <i class="fa-solid fa-unlock"></i>
+                        <input type="password" placeholder="Password" name="password" required id="user-password">
+                    </div>
+                </div>
+                <div class="">
+                    <input type="submit" class="login-submit-btn" value="Login">
+                </div>
+            </form>
+        </div>
+    </div>
+
+  </section>
+  {% include 'footer-links.html' %}
+
+</body>
+
+</html>

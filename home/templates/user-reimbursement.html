@@ -1,0 +1,222 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    {% include 'header-links.html' %}
+
+<body>
+    {% include 'header.html' %}
+    {% if user.is_authenticated and user.is_superuser %}
+
+    <section class="nav-section">
+        {% include 'subtitle.html' %}
+        {% include 'message.html' %}
+
+    <div class="breadcum">
+        <h2>Project List</h2>
+        <p> <a href="/">  Dashboard</a> / Project Lists</p>
+    </div>
+
+    <div class="row py-2 mb-2 mx-1 project-list" style="background: white;">
+        <form >
+        <div class="col-md-12 mb-2 ">
+            <div class="row">
+                <div class="col-md-3"><h5>Select Engineer : </h5></div>
+                <div class="col-md-3">
+                    <select class="js-example-basic-single" class="form-control" name="get_engineer" >
+                       {% for jl  in total_user %}
+                        <option value="{{jl}}">{{jl}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-2"><button type="submit" class="butn">Search</button></div>
+            </div>
+        </div>
+    </form>
+
+    </div>
+
+    <div class="project-list-links">
+        <div class="links p-2">
+            <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                
+                <li class="nav-item" role="presentation" >
+                  <div onclick="back_to_project_list()" class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true"><i class="fa-regular fa-life-ring"></i> TOTAL COST</div>
+                </li>
+            
+
+                <li class="nav-item" role="presentation">
+                  <div class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false"><i class="fa-regular fa-circle-check"></i> Approved</div>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <div class="nav-link" id="pills-pending-tab" data-bs-toggle="pill" data-bs-target="#pills-pending" role="tab" aria-controls="pills-pending" aria-selected="false"><i class="fa-solid fa-clock-rotate-left"></i> Approval Pending</div>
+                </li>
+            </ul>
+            {% comment %} <div class="create-new-project p-2">
+                <a href="/create-project"><i class="fa-regular fa-square-plus"></i> Create New Project</a>
+            </div> {% endcomment %}
+        </div>
+
+        <div class="tab-content project-cards-main mt-4 p-2" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <!-- --- All  Work  Done ✅ or Doing 🤘 -->
+                <div class="project-cards-grid p-3">
+                    {% for i in total_cost %}
+                    <div class="single-project">
+                        <div class="details">
+                            <strong>{{i.visit_purpose}}</strong>
+                            <p>{{i.company.company_name}}</p>
+                        </div>
+
+                        <table>
+                            <tr>
+                        <td>Engineer Name</td>
+                        <td class="work-description" style="text-transform: capitalize;" >{{i.engineer.first_name}}</td>
+                         </tr>
+                            <tr>
+                        <td>Contact No.</td>
+                        <td class="work-description">{{i.engineer.user_phone}}</td>
+                         </tr>
+                            <tr>
+                        <td>Manager Name</td>
+                        <td class="work-description" style="text-transform: capitalize;">{{i.manager_name}}</td>
+                        </tr>
+                       
+                           
+                            <tr>
+                                <td>Cost</td>
+                                <td>{{i.cost}}</td>
+                            </tr>
+                        </table>
+
+                        <div class="box-btns" style="justify-content: space-between;">
+                            <a href="/reimbursement-details/{{i.id}}" class="down" style="background-color: #4586DC;">View Details <i class="fa-solid fa-eye"></i> </a>
+                            
+                            {% if  i.reimbursement_status == "Pending" %}
+                            <a href="/approve-reimbursement/{{i.id}}" class="down">Approve <i class="fa-solid fa-circle-check"></i> </a>
+                            {% elif  i.reimbursement_status == "Approved" %}
+                            <a href="/clear-reimbursement/{{i.id}}" style="background: orange;" class="down">Clear <i class="fa-solid fa-trash"></i> </a>
+                            {% endif %}
+
+                        </div>
+                        <div class="
+                        {% if i.reimbursement_status == 'Pending' %}
+                            
+                        status-pending
+                        {% elif  i.reimbursement_status == 'Approved' %}
+                        status-done
+                         {% endif %}
+                        ">{{i.reimbursement_status}}</div>
+                        
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                <!-- --- Work Has Been Done ✅ -->
+                <div class="project-cards-grid p-3">
+
+                    {% for ip in approved_data %}
+                    <div class="single-project">
+                        <div class="details">
+                            <strong>{{ip.visit_purpose}}</strong>
+                            <p>{{ip.company.company_name}}</p>
+                        </div>
+
+                        <table>
+                            <tr>
+                        <td>Engineer Name</td>
+                        <td class="work-description">{{ip.engineer.first_name}}</td>
+                         </tr>
+                            <tr>
+                        <td>Contact No.</td>
+                        <td class="work-description">{{ip.engineer.user_phone}}</td>
+                         </tr>
+                            <tr>
+                        <td>Manager Name</td>
+                        <td class="work-description">{{ip.manager_name}}</td>
+                        </tr>
+                       
+                           
+                            <tr>
+                                <td>Cost</td>
+                                <td>{{ip.cost}}</td>
+                            </tr>
+                        </table>
+                        <div class="box-btns" style="justify-content: space-between;">
+                            <a href="/reimbursement-details/{{ip.id}}" class="down" style="background-color: #4586DC;">View Details <i class="fa-solid fa-eye"></i> </a>
+                            <a href="/clear-reimbursement/{{ip.id}}" style="background: orange;" class="down">Clear <i class="fa-solid fa-trash"></i> </a>
+                        </div> 
+                        <div class="status-done">{{ip.reimbursement_status}}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            
+
+            <div class="tab-pane fade" id="pills-pending" role="tabpanel" aria-labelledby="pills-pending-tab">
+                <!-- --- Work Pending -->
+                <div class="project-cards-grid p-3">
+
+                    {% for ip in pending_data %}
+                    <div class="single-project">
+                        <div class="details">
+                            <strong>{{ip.visit_purpose}}</strong>
+                            <p>{{ip.company.company_name}}</p>
+                        </div>
+
+                        <table>
+                            <tr>
+                        <td>Engineer Name</td>
+                        <td class="work-description">{{ip.engineer.first_name}}</td>
+                         </tr>
+                            <tr>
+                        <td>Contact No.</td>
+                        <td class="work-description">{{ip.engineer.user_phone}}</td>
+                         </tr>
+                            <tr>
+                        <td>Manager Name</td>
+                        <td class="work-description">{{ip.manager_name}}</td>
+                        </tr>
+                       
+                           
+                            <tr>
+                                <td>Cost</td>
+                                <td>{{ip.cost}}</td>
+                            </tr>
+                        </table>
+                        <div class="box-btns" style="justify-content: space-between;">
+                            <a href="/reimbursement-details/{{i.id}}" class="down" style="background-color: #4586DC;">View Details <i class="fa-solid fa-eye"></i> </a>
+                            <a href="/approve-reimbursement/{{ip.id}}" class="down">Approve <i class="fa-solid fa-circle-check"></i> </a>
+                        </div>
+                        <div class="status-pending">{{ip.reimbursement_status}}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    </section>
+    {% include 'admin-footer.html' %}
+    {% include 'footer-links.html' %}
+    {% else %}
+    <script>
+        window.location.href='/page-note-found'
+    </script>
+    {% endif %}
+
+    <script>
+        $(document).ready(function() {
+            $('.js-example-basic-single').select2();
+        });
+        function back_to_project_list(){
+            window.location.href='/reimbursement/'
+        }
+    </script>
+</body>
+
+</html>

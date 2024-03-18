@@ -1,0 +1,10 @@
+<div class="pagination">
+    {%if data.has_previous %} {# whether the previous page exists #}
+        <a class="btn prev" href="?page={{page_obj.previous_page_number}}">Previous</a>
+    {% endif %}
+    <span class="num" >{{data.number}}</span>
+   
+    {%if data.has_next %} 
+        <a class="btn next" href="?page={{data.next_page_number}}">Next</a> 
+    {% endif %}
+  </div>

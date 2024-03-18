@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8" />
+  {% include 'header-links.html' %}
+</head>
+
+<body>
+  {% include 'header.html' %}
+  {% if user.is_authenticated and user.is_superuser %}
+
+  <section class="nav-section">
+    {% include 'subtitle.html' %}
+
+    <div class="breadcum">
+        <h2>Create New Project </h2>
+        <p> <a href="./index.html">  Dashboard</a> / Create Project</p>
+    </div>
+
+    <div class="create-project-form p-3">
+        <form class="row g-3" method="post">
+          {% csrf_token %}
+            <div class="col-12">
+                <label for="project-title" class="form-label">Project Title</label>
+                <input type="text" name="project_title" class="form-control" id="project-title" placeholder="Project Title*">
+            </div>
+            <div class="col-md-6">
+              <label for="selectGender" class="form-label">Select Your Company</label>
+              <select class="js-example-basic-single" name="client_name" class="form-select" >
+              
+                {% for com in companydata %}
+                <option value="{{com.company_name}}">{{com.company_name}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-md-6">
+                <label for="machine-type" class="form-label">Machine Type</label>
+                <select class="js-example-basic-single" name="machine_type" class="form-select" >
+              
+                  {% for machine in machine_data %}
+                  <option value="{{machine.machine_type}}">{{machine.machine_type}}</option>
+                  {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4">
+              <label for="project-rate" class="form-label">Project Rate</label>
+              <input type="number" name="project_rate" class="form-control" id="project-rate" placeholder="Project Rate">
+            </div>
+            <div class="col-md-4">
+              <label for="inputEmail4" class="form-label">Email Id</label>
+              <input type="email" name="project_email" class="form-control" id="inputEmail4" placeholder="Email Id">
+            </div>
+            <div class="col-md-4">
+              <label for="phone-number" class="form-label">Phone Number</label>
+              <input type="number" name="project_phone" class="form-control" id="phone-number" placeholder="Phone Number*">
+            </div>
+            <div class="col-12">
+              <label for="work-desc" class="form-label">Enter some Details*</label>
+              <input type="text" name="project_description" class="form-control" id="work-desc" placeholder="Work Description*">
+            </div>
+            <div class="col-12">
+              <label for="inputAddress" class="form-label">Address*</label>
+              <input type="text" name="project_address" class="form-control" id="inputAddress" placeholder="Enter Your Address">
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn">Add Project</button>
+                <button type="reset" class="btn">Reset</button>
+                <a href="./project-list.html"><button type="button" class="btn">Cancel</button></a>
+            </div>
+
+            <!-- <div class="col-md-4">
+              <label for="inputState" class="form-label">State</label>
+              <select id="inputState" class="form-select">
+                <option selected>Choose...</option>
+                <option>...</option>
+              </select>
+            </div> -->
+        </form>
+    </div>
+
+  </section>
+  {% include 'admin-footer.html' %}
+
+  {% include 'footer-links.html' %}
+  {% else %}
+    <script>
+        window.location.href='/page-note-found'
+    </script>
+    {% endif %}
+</body>
+
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Add Report - User</title>
+    {% include 'header-links.html' %}
+</head>
+
+<body>
+    {% include 'header.html' %}
+    {% if user.is_authenticated  and not user.is_superuser%}
+    <section class="nav-section">
+        {% include 'subtitle.html' %}
+        {% include 'message.html' %}
+        <div class="breadcum">
+            <h2>Report Of Project </h2>
+            <p> <a href="/"> Dashboard</a> / </p>
+        </div>
+
+        <div class="overflow-auto">
+            <div class="field-service-report p-2 mt-5 large-table">
+            
+                <div class="mb-2" style="display: grid;grid-template-columns:1fr 3fr;width:100%">
+                    <div class="col">
+                        <img src="/static/assets/images/logo.png" alt="emambit logo">
+                    </div>
+                    <div class="text-end px-5" style="background: #84848484;">
+                        <h2><span style="color: red;">EM</span>AMBIT PVT. LTD.</h2>
+                        <small style="color: red;"><i>Our passion is your success</i></small>
+                    </div>
+                </div>
+            
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h2>Field Service Report</h2>
+                    </div>
+    
+                    <div class="col-6">
+                        <table>
+                            <tr>
+                                <th>Customer Name : </th>
+                                <td>{{data_to_report.company_name}}</td>
+                            </tr>
+                            <tr>
+                                <th>Address : </th>
+                                <td>{{data_to_report.company_name.company_address}}</td>
+                            </tr>
+                            <tr>
+                                <th>Contact Person : </th>
+                                <td>Mr. {{data_to_report.company_name.contact_person}}</td>
+                            </tr>
+                            <tr>
+                                <th>Contact Number : </th>
+                                <td>{{data_to_report.company_name.company_phone}}</td>
+                            </tr>
+                            <tr>
+                                <th>Email Address : </th>
+                                <td>{{data_to_report.company_name.company_email}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-6">
+                        <table>
+                            {% comment %} <tr>
+                                <th>Date : </th>
+                                <td>{{data_to_report.reach_date | date:'d-m-Y'}}</td>
+                            </tr> {% endcomment %}
+                            {% comment %} <tr>
+                                <th>Machine Type : </th>
+                                <td>{{data_to_report.machine_type}}</td>
+                            </tr> {% endcomment %}
+                            <tr>
+                                <th>Emambit Manager : </th>
+                                <td>Mr. {{data_to_report.manager_name.first_name}}</td>
+                            </tr>
+                            <tr>
+                                <th>Phone Number : </th>
+                                <td>{{data_to_report.manager_name.user_phone}}</td>
+                            </tr>
+                            <tr>
+                                <th>Manager Email : </th>
+                                <td>{{data_to_report.manager_name.email}}</td>
+                            </tr>
+                        </table>
+                    </div>
+    
+                    <div class="col-12">
+                        <div class="scheduling">
+                            <h3><span>Purpose / Type of Visit</span> : - {{data_to_report.visit_purpose}}</h3>
+    
+                            <table id="report-row-table" >
+                                <thead>
+                                    <tr>
+                                        <th style="width: 15%;">Engineer</th>
+                                        <th>Day</th>
+                                        <th>Visit Date</th>
+                                        <th>Starting Time</th>
+                                        <th>Ending Time</th>
+                                        <th>Total Hours</th>
+                                        <th>Work Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for di in reported_data %}
+                                    <tr>
+                                        <td>{{di.engineer}}</td>
+                                        <td>Day {{di.day_count}}</td>
+                                        <td>{{di.report_date}}</td>
+                                        <td>{{di.starting_time}}</td>
+                                        <td>{{di.ending_time}}</td>
+                                        <td>{{di.total_hours}}</td>
+                                        <td>{{di.description}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            
+                        </div>
+    
+                        <div class="add-report-data mt-5">
+                            <!-- --- Add Data ---  -->
+                            <form method="post">
+                            <table>
+                                    {% csrf_token %}
+                                <tr>
+                                    <td><input type="number" name="day_count" id="days"  placeholder="Day" required></td>
+                                    <td><input type="date" name="visit_date" id="visit_date" required></td>
+                                    <td><input type="time" name="starting_time" id="starting_time" required></td>
+                                    <td><input type="time" name="ending_time" id="ending_time" onchange="calculateTotalTime()" required></td>
+                                    <td><input style="width: 63px; padding: 0px 6px;" type="text" name="total_hours" id="total_hours" placeholder="Time" value="00:00" required></td>
+                                       
+                                    <td><textarea name="description" id="work_desc" rows="3" placeholder="Description" required></textarea></td>
+                                </tr>
+                            </table>
+                                <button type="submit" class=" mt-2 btn btn-primary add-row-btn" id="add-report-row-btn" >Add Report</button>
+                            </form>
+                                <script>
+                                    function calculateTotalTime() {
+                                        var startingTime = document.getElementById("starting_time").value;
+                                        var endingTime = document.getElementById("ending_time").value;
+                            
+                                        // Check if both starting and ending times are selected
+                                        if (startingTime && endingTime) {
+                                            // Convert input strings to Date objects
+                                            var startTime = new Date("1970-01-01T" + startingTime + "Z");
+                                            var endTime = new Date("1970-01-01T" + endingTime + "Z");
+                            
+                                            // Calculate time difference in milliseconds
+                                            var timeDifference = endTime - startTime;
+                            
+                                            // Calculate total hours and total minutes
+                                            var totalHours = Math.floor(timeDifference / (1000 * 60 * 60));
+                                            var totalMinutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+                            
+                                            // Format the output
+                                            var formattedTotalTime = (totalHours < 10 ? '0' : '') + totalHours + ":" + (totalMinutes < 10 ? '0' : '') + totalMinutes;
+                            
+                                            // Display the result in the output field
+                                            document.getElementById("total_hours").value = formattedTotalTime;
+                                        } else {
+                                            // If either starting or ending time is not selected, set default value to "00:00"
+                                            document.getElementById("total_hours").value = "00:00";
+                                        }
+                                    }
+                                </script>
+                        </div>
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        {% if request.user == data_to_report.manager_name %}
+            
+        
+            
+        <div class="assign-engineer p-3 mt-5">
+            <form class="row g-3" action='/project-compeletion/{{data_to_report.id}}' method='post' enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="col-md-12">
+                    <h4>Project Complition Details</h4>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-floating">
+                        <textarea class="form-control" placeholder="Project Completion Description" style="height: 150px;" name="project_description" id="floatingTextarea" required></textarea>
+                        <label for="floatingTextarea" aria-required="true">Project Completion Description</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputPassword4" class="form-label">Select Your Images</label>
+                    <input type="file" name='project_image' multiple='multiple'  class="form-control" id="inputPassword4" required>
+                </div>
+                
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const inputElement = document.getElementById('inputPassword4');
+                        inputElement.addEventListener('change', function (e) {
+                            if (inputElement.files.length > 6) {
+                                alert('You can only select up to 6 files.');
+                                inputElement.value = ''; // Clear the selected files
+                            }
+                        });
+                    });
+                </script>
+                <div  class="text-center"><button class="text-center btn-primary btn"> Submit Final Report</button></div>
+            </form>
+        </div>
+        {% endif %}
+
+
+    </section>
+
+
+    {% include 'footer-links.html' %}
+    {% else %}
+    <script>
+        window.location.href='/page-note-found'
+    </script>
+    {% endif %}
+
+</body>
+
+</html>

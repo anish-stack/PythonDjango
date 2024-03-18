@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Add Reimbursement - User</title>
+    {% include 'header-links.html' %}
+    
+</head>
+
+<body>
+    {% include 'header.html' %}
+    {% if user.is_authenticated and  user.is_superuser%}
+  <section class="nav-section">
+    {% include 'subtitle.html' %}
+    {% include 'message.html' %}
+
+    <div class="overflow-auto">
+        <div class="performa-invoice p-2 py-5 large-table">
+            <div class="row">
+                <div class="col-12 mb-2" style="display: grid;grid-template-columns:1fr 3fr;width:100%">
+                    <div class="col">
+                        <img src="/static/assets/images/logo.png" alt="emambit logo">
+                    </div>
+                    <div class="text-end px-5" style="background: #84848484;">
+                        <h2><span style="color: red;">EM</span>AMBIT PVT. LTD.</h2>
+                        <small style="color: red;"><i>Our passion is your success</i></small>
+                    </div>
+                </div>
+                <div class="col-12 text-center mb-1" style="background: #E4E9F7;color: #3d4584">
+                    <h3>Reimbursement</h3>
+                </div>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                <div class="col-7">
+                    <table class="border-table">
+                        <tr>
+                            <th>Employee Name</th>
+                            <td><input type="text" class="px-3" value="{{data_to_view.engineer.first_name}}" name="engineer" readonly required></td>
+                        </tr>
+                        <tr>
+                            <th>Customer name</th>
+                            <td>
+                              <input type="text"  class="px-3" value="{{data_to_view.company.company_name}}" readonly>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Visit Purpose:</th>
+                            <td><input type="text" class="px-3" value="{{data_to_view.visit_purpose}}" readonly> </td>
+                        </tr>
+                        <tr>
+                            <th>Manager Name :</th>
+                            <td><input type="text" class="px-3" value="{{data_to_view.manager_name}}" readonly> </td>
+                        </tr>
+                        <tr>
+                            <th>Department Name :</th>
+                            <td><input type="text" class="px-3" value="{{data_to_view.department}}" readonly>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="col-5">
+                </div>
+                <div class="col-12 mt-4">
+                    <div class="description-table reimburement-table">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    {% comment %} <th scope="col-1">S. No</th> {% endcomment %}
+                                    <th scope="col-2">Visit Date</th>
+                                    <th scope="col-1">Work Description</th>
+                                    <th scope="col-1">Category</th>
+                                    <th scope="col-1">Cost</th>
+                                    <th scope="col-1">Advance</th>
+                                    <th scope="col-1">Deu</th>
+                                    <th scope="col-1"> Status</th>
+                                    <th scope="col-2" style="width: 3%;">Action</th>
+                                  </tr>
+                            
+                              <tr id="input_single">
+                                <td><input type="text"  name="date"  value="{{data_to_view.date}}" readonly></td>
+                                <td><input type="text" name="work_description" id="" value="{{data_to_view.work_description}}" readonly></td>
+                                <td><input type="text" name="category" value="{{data_to_view.category}}" readonly></td>
+                                <td><input type="number" id="reimbursement" name="reimbursement_value"  value="{{data_to_view.reimbursement_value}}" min="0" required
+                                    {% if data_to_view.reimbursement_status == 'Approved' %}
+                                    readonly
+                                {% endif %}
+                                ></td>
+                                <td><input type="number" id="advance" name="advance" min="0" value="{{data_to_view.advance}}" required 
+                                {% if data_to_view.reimbursement_status == 'Approved' %}
+                                    readonly
+                                {% endif %}
+                                    ></td>
+                                <td><input type="number" id="due" name="cost" min="0" value="{{data_to_view.cost}}"  readonly required></td>
+                                 <td><input type="text" value="{{data_to_view.reimbursement_status}}"  readonly></td>
+                                 
+                                 {% if data_to_view.reimbursement_status != "Approved" %}
+                                    
+                                 <td><button class="btn btn-primary mb-2" type="submit" >Approve</button></td>
+                                 {% endif %}
+                                    
+                              </tr>
+                            <script>
+                                let reimburement_value = document.getElementById("reimbursement"); 
+                                let advance_value = document.getElementById("advance"); 
+                                let due_value = document.getElementById("due"); 
+
+                                let input_single = document.querySelectorAll("#input_single input")
+                                console.log(input_single)
+                                input_single.forEach((btns)=>{
+                                    btns.addEventListener("input",()=>{
+                                        due_value.value =  reimburement_value.value - advance_value.value;
+                                    })
+                                })
+                            </script>
+                            </thead>
+                            <tbody style=";background-color: red;">
+                            </tbody>
+                            
+                          </table>
+                          <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                const inputElement = document.getElementById('attachment');
+                                inputElement.addEventListener('change', function (e) {
+                                    if (inputElement.files.length > 5) {
+                                        alert('You can only select up to 5 files.');
+                                        inputElement.value = ''; // Clear the selected files
+                                    }
+                                });
+                            });
+                        </script>
+                    </div>
+                </div>
+            </form>
+
+                <div class="col-8">
+                </div>
+                <div class="col-4">
+                    <table class="border-table">
+                        {% comment %} <tr>
+                            <th>SUBTOTAL</th>
+                            <td>₹ 3,600.00</td>
+                        </tr>
+                        <tr>
+                            <th>LESS CASH ADVANCE</th>
+                            <td><input type="number" min="0"></td>
+                        </tr> {% endcomment %}
+                        <tr>
+                            <th>REIMBURSEMENT</th>
+                            <td>₹ {{data_to_view.reimbursement_value}}.00</td>
+                        </tr>
+                        <tr>
+                            <th>ADVANCE</th>
+                            <td>₹ {{data_to_view.advance}}.00</td>
+                        </tr>
+                        <tr>
+                            <th>TOTAL REIMBURSEMENT</th>
+                            <td style="font-weight: 700; background-color: #efeffe;">₹ {{data_to_view.cost}}.00</td>
+                        </tr>
+
+                    </table>
+                </div>
+                <h3>Reimbursement Attachments</h3>
+                <div class="product-gallery-grid">
+                    {% for attach in attachments %}
+                   <img style="max-height: 250px;" src="{{attach.images.url}}" alt="">
+                   {% endfor %}
+                   
+               </div>
+                <div class="col-12 mt-3">
+                    <table class="border-table signature-table">
+                        <tr>
+                            <th>Employee Signature : </th>
+                            <td></td>
+                            <th>Date : </th>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>Approval Signature : </th>
+                            <td></td>
+                            <th>Date : </th>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+
+            
+                <div class="col-12 mt-3 text-center">
+                    <div class="mt-1"><strong>Thank you for your business!</strong></div>
+                    <div class="address">
+                        <p>EMAMBIT PRIVATE LIMITED</p>
+                        <p>TOWER-B,UNIT NO:- B-06. GROUND FLOOR,LOGIX TECHNOVA ,IT/ITES BUILDING</p>
+                        <p>PLOT NO-4, SECTOR-132,NOIDA,UTTAR PRADESH-201304,</p>
+                        <p>Phone No. +91-9811226914, Email: accounts@emambit.com Web: www.emambit.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  </section>
+
+    <script type="text/javascript">
+        $(function() {
+        
+        $('input[name="datefilter"]').daterangepicker({
+            autoUpdateInput: false,
+            locale: {
+                cancelLabel: 'Clear'
+            }
+        });
+        
+        $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+        });
+        
+        $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
+            $(this).val('');
+        });
+        
+        });
+    </script>
+    {% include 'admin-footer.html' %}
+    {% include 'footer-links.html' %}
+
+    {% else %}
+    <script>
+        window.location.href='/page-note-found'
+    </script>
+    {% endif %}
+{% comment %} <script>
+    $(document).ready(function() {
+        $('.js-example-basic-single').select2();
+    });
+</script> {% endcomment %}
+
+</body>
+
+</html>

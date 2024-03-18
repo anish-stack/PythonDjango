@@ -1,0 +1,26 @@
+<div class="mobile-dash-footer">
+    
+    
+        
+    <a href="/" class="single {% if request.path == '/' %} active {% endif %}
+        ">
+        <i class="fa-solid fa-list"></i>
+        <small>Dashboad</small>
+    </a>
+    <a href="/project-lists" class="single  {% if request.path == '/project-lists/' %} active {% endif %}">
+        <i class="fa-solid fa-clipboard-list"></i>
+        <small>Projects</small>
+    </a>
+    <a href="/assigned-works" class="single {% if request.path == '/assigned-works/' %} active {% endif %}">
+        <i class="fa-regular fa-calendar-check"></i>
+        <small>Assign Work</small>
+    </a>
+    <a href="/manage-company" class="single {% if request.path == '/manage-company/' %} active {% endif %}">
+        <i class="fa-solid fa-shapes"></i>
+        <small>Manage Company</small>
+    </a>
+    <a href="/manage-engineer" class="single {% if request.path == '/manage-engineer/' %} active {% endif %}">
+        <i class="fa-solid fa-user-tie"></i>
+        <small>Manae Engineers</small>
+    </a>
+</div>

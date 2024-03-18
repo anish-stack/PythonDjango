@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard - Project Management System</title>
+  {% include 'header-links.html' %}
+</head>
+
+<body>
+  {% include 'header.html' %}
+  
+  {% if user.is_authenticated and not user.is_superuser%}
+  <section class="nav-section">
+    {% include 'subtitle.html' %}
+    {% include 'message.html' %}
+
+    <!-- -- Dashboard Boxes  -->
+    <div class="dashboard-header">
+      <div class="grid-4">
+        <div class="box">
+          <div>
+            <strong class="num">{{projects_data|length}}</strong>
+            <p>Assigned Works</p>
+          </div>
+          <div class="icon">
+            <i class="fa-solid fa-users-gear"></i>
+          </div>
+        </div>
+        <div class="box">
+            <div>
+              <strong class="num">{{ done_count }}</strong>
+              <p>Works Done</p>
+            </div>
+            <div class="icon">
+              <i class="fa-solid fa-barcode"></i>
+            </div>
+          </div>
+        <div class="box">
+          <div>
+            <strong class="num">{{doing_count}}</strong>
+            <p>Doing Projects</p>
+          </div>
+          <div class="icon">
+            <i class="fa-solid fa-clipboard-list"></i>
+          </div>
+        </div>
+        <div class="box">
+          <div>
+            <strong class="num">{{reimbursement_cost}}</strong>
+            <p>Total Reimbursement</p>
+          </div>
+          <div class="icon">
+            <i class="fa-solid fa-briefcase"></i>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+
+    <!-- total-projects -->
+    <div class="manage-invoice total-projects mt-3">
+        <div class="submenu-header">
+          <h2>Total Projects</h2>
+          <div class="menu-btn">
+            <a href="">See All <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </div>
+  
+        <div class="total-project-table overflow-auto">
+          <table class="large-table" style="min-width: 1200px;">
+            <thead>
+              <tr>
+                <th>Sr No.</th>
+                <th>Company Name</th>
+                <th>Starting Date</th>
+                <th>Ending Date</th>
+                <th>Project</th>
+                <th>Contact Number</th>
+                <th>Status</th>
+                <th>Update</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for d in projects_data %}
+              <tr>
+                <td>{{forloop.counter }}</td>
+                <td>{{d.company_name.company_name}}</td>
+                <td>{{d.timestampt|date:'d-m-Y'}}</td>
+                <td>{{d.ending_date}}</td>
+                <td>{{d.visit_purpose }}</td>
+                <td>{{d.company_name.company_phone}}</td>
+                <td>
+                    <div class="inprogress-btn"></div> {{d.work_status}}
+                </td>
+                
+                {% if d.work_status  == "Done" %}
+                <td>
+                  <a href="{{d.download_link}}" class="down-pdf-btn"> <i class="fa-solid fa-file-pdf"></i>Download</a>
+                </td>
+                {% elif d.work_status == "Pending" %}
+                <td>
+                  <a  class="add-report-btn">
+                  <i class="fa-solid "></i>Pending</a>
+                </td>
+                {% else %}
+                <td>
+                  <a href="/add-report/{{d.id}}" class="add-report-btn">
+                  <i class="fa-solid fa-plus"></i> Add Report</a>
+                </td>
+                {% endif %}
+                  
+                
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+    </div>
+    
+
+  </section>
+  {% include 'user-footer.html' %}
+  {% elif user.is_authenticated and  user.is_superuser %}
+  <script>
+    window.location.href='/'
+  </script>
+  {% endif %}
+  {% include 'footer-links.html' %}
+</body>
+
+</html>

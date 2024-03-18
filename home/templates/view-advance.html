@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Assigned Works - Project Management System</title>
+  {% include 'header-links.html' %}
+</head>
+
+<body>
+  {% include 'header.html' %}
+  {% if user.is_authenticated and user.is_superuser %}
+
+
+  <section class="nav-section">
+    {% include 'subtitle.html' %}
+    {% include 'message.html' %}
+
+    <div class="breadcum">
+        <div class="flex">
+            <div>
+                <h2>Advance</h2>
+                <p> <a href="/">  Dashboard</a> / Advance</p>
+            </div>
+            {% if request.user.is_superuser %}
+            
+        
+              {% if request.user.is_superuser %}
+          
+              <div class=" download-attendance">
+                  <div class="button-btn">
+                      <div class="button">
+                          <span>Download Advance</span>
+                          <a style="cursor: pointer;"><i class="fa-solid fa-download ii"></i></a>
+                      </div>
+                      <ul>
+                          <li><a href="/download-advance/01">JANUARY</a></li>
+                          <li><a href="/download-advance/02">FEBRUARY</a></li>
+                          <li><a href="/download-advance/03">MARCH</a></li>
+                          <li><a href="/download-advance/04">APRIL</a></li>
+                          <li><a href="/download-advance/05">MAY</a></li>
+                          <li><a href="/download-advance/06">JUNE</a></li>
+                          <li><a href="/download-advance/07">JULY</a></li>
+                          <li><a href="/download-advance/08">AUGUST</a></li>
+                          <li><a href="/download-advance/09">SEPTEMBER</a></li>
+                          <li><a href="/download-advance/10">OCTOBER</a></li>
+                          <li><a href="/download-advance/11">NOVEMBER</a></li>
+                          <li><a href="/download-advance/12">DECEMBER</a></li>
+                      </ul>
+                  </div>
+              </div>
+              {% endif %}
+          </div>
+            {% endif %}
+            {% comment %} <form >
+            <div class="flex gap-2"  >
+              <select  class="js-example-basic-single" class="form-control" name="get_user">
+                {% for er in all_engineers %}
+                <option value="{{er}}">{{er}}</option>
+                {% endfor %}
+             </select>
+              <button class="btn btn-primary" type="submit" >Search</button>
+            </div>
+          </form> {% endcomment %}
+        </div>
+    </div>
+
+    <div class="assigned-works-table editable-table overflow-auto" style="background: white;">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table large-table">
+                    <thead>
+                      <tr>
+                        <th scope="col">S.no</th>
+                        <th scope="col">Engineer Name</th>
+                        <th scope="col">Contact Number</th>
+                        <th scope="col">Company</th>
+                        <th scope="col">Purpose Of Visit</th>
+                        <th scope="col">Advance Amount</th> 
+                        <th scope="col">Delete</th> 
+                      </tr>
+                    </thead>
+                    <tbody>
+                     {% for i in advance_data.object_list%} 
+                      <tr>
+                        <td >{{forloop.counter}}</td>
+                        <td>{{i.engineer_name.first_name}}</td>
+                        <td>{{i.engineer_name.user_phone}}</td>
+                        <td>{{i.project_name.company_name.company_name}}</td>
+                        <td>{{i.project_name.visit_purpose}}</td>
+                       
+
+                        <td>{{i.advance_amount}}</td>
+                       
+                                         
+                        <td>
+                            <a href="/delete-advance/{{i.id}}"><i class="fa-solid fa-trash-can-arrow-up"></i></a>
+                        </td>
+                      </tr>
+                       {% endfor %} 
+                      
+                    </tbody>
+                </table>
+                <div class="pagination">
+                  {%if advance_data.has_previous %} 
+                      <a class="btn prev" href="?page={{advance_data.previous_page_number}}">Previous</a> 
+                  {% endif %}
+                  <span class="num" >{{advance_data.number}}</span> 
+                 
+                  {%if advance_data.has_next %} 
+                      <a class="btn next" href="?page={{advance_data.next_page_number}}">Next</a> 
+                  {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+  </section>
+  {% include 'admin-footer.html' %}
+
+
+  {% include 'footer-links.html' %}
+  {% else %}
+  <script>
+      window.location.href='/page-note-found'
+  </script>
+  {% endif %}
+  {% comment %} <script>
+    $(document).ready(function() {
+      $('.js-example-basic-single').select2();
+  });
+  </script> {% endcomment %}
+</body>
+
+</html>

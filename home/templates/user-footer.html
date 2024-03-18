@@ -1,0 +1,18 @@
+<div class="mobile-dash-footer grid-4-foot" style="grid-template-columns: repeat(4,1fr);">
+    <a href="/" class="single {% if request.path == '/user-dashboard/' %} active {% endif %}">
+  <i class="fa-solid fa-list"></i>
+  <small>Dashboad</small>
+</a>
+<a href="/user-attendance" class="single {% if request.path == '/user-attendance/' %} active {% endif %} ">
+  <i class="fa-solid fa-clipboard-list"></i>
+  <small>Attendance</small>
+</a>
+<a href="/add-reimbursement" class="single {% if request.path == '/add-reimbursement/' %} active {% endif %} ">
+  <i class="fa-solid fa-indian-rupee-sign"></i>
+  <small>Reimbursment</small>
+</a>
+<a href="/user-profile" class="single {% if request.path == '/user-profile/' %} active {% endif %}">
+  <i class="fa-solid fa-user-tie"></i>
+  <small>Profile</small>
+</a>
+</div>

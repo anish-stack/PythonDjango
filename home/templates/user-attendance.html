@@ -1,0 +1,420 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Mark Attendance</title>
+  {% include 'header-links.html' %}
+</head>
+<body>
+    {% include 'header.html' %}
+  <section class="nav-section">
+    {% include 'subtitle.html' %}
+    {% include 'message.html' %}
+
+    <div class="breadcum">
+        <div class="flex">
+            <div>
+                <h2>Mark Attendance</h2>
+                <p><a href="/">  Dashboard</a> / Attendance</p>
+            </div>
+
+            <div class="">
+                {% if request.user.is_superuser %}
+
+                <div class=" download-attendance">
+                    <div class="button-btn">
+                        <div class="button">
+                            <span>Download Attendance</span>
+                            <a style="cursor: pointer;"><i class="fa-solid fa-download ii"></i></a>
+                        </div>
+                        <ul id='at_month'>
+                            <li><a href="/excel-attendance/01">JANUARY</a></li>
+                            <li><a href="/excel-attendance/02">FEBRUARY</a></li>
+                            <li><a href="/excel-attendance/03">MARCH</a></li>
+                            <li><a href="/excel-attendance/04">APRIL</a></li>
+                            <li><a href="/excel-attendance/05">MAY</a></li>
+                            <li><a href="/excel-attendance/06">JUNE</a></li>
+                            <li><a href="/excel-attendance/07">JULY</a></li>
+                            <li><a href="/excel-attendance/08">AUGUST</a></li>
+                            <li><a href="/excel-attendance/09">SEPTEMBER</a></li>
+                            <li><a href="/excel-attendance/10">OCTOBER</a></li>
+                            <li><a href="/excel-attendance/11">NOVEMBER</a></li>
+                            <li><a href="/excel-attendance/12">DECEMBER</a></li>
+                        </ul>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+
+    </div>
+
+
+    {% if request.user.is_authenticated and not  request.user.is_superuser %}
+
+
+
+    <div class="attendance-div">
+      <div class="row">
+
+          <div class="col-lg-4 col-md-6">
+              <div class="curve attendance-main">
+                  {% comment %} <h4 class="subhead">Timesheet <small>11 March 2024</small> </h4>
+                  <div class="punch-at curve">
+                      <strong>Punch in at</strong>
+                      <small id="today_date">Wed,11 Mar 2019 10.00 AM</small>
+                  </div> {% endcomment %}
+                  <div class="circle">
+                    {% if attendance_data.punch_status == "Out" %}
+                    <p>{{attendance_data.total_hours}}</p>
+                    {% elif attendance_data.punch_status == "In" %}
+                    <p id="time_to_show">00:00:00 Hrs</p>
+                      {% else %}
+                      <p>00 : 00 : 00 Hrs</p>
+                      {% endif %}
+                  </div>
+
+                 {% if attendance_data.punch_status == "In" %}
+                  <form id="punchout-form" action="/punch-out/" method="post">
+                    {% csrf_token %}
+                    <input type="text" name="punchout_country" id="punchout_country"  hidden readonly>
+                    <input type="text" name="punchout_state" id="punchout_state" hidden readonly>
+                    <input type="text" name="punchout_location" id="punchout_location" hidden readonly>
+                    <input type="text" name="punchout_postcode" id="punchout_postcode" hidden readonly>
+                    <input type="text" name="attendance_date" id="attendance_date" hidden readonly>
+                    <input type="text" name='punchout_time' id="punchout_time" hidden readonly>
+                    <input type="text" name='total_hours' id="total_hours" hidden readonly>
+                    <button id="out-btn" type="button" class="btn btn-primary w-100">Punch Out</button>
+                  </form>
+                  {% elif attendance_data.punch_status == "Out" %}
+                  <div class="btn btn-warning">Attendance Already Marked</div>
+                  {% else %}
+                  <form id="punchin-form" action="/punch-in/" method="post">
+                    {% csrf_token %}
+                    <input type="text" name="punchin_country" id="punchin_country" hidden readonly>
+                    <input type="text" name="punchin_state" id="punchin_state" hidden>
+                    <input type="text" name="punchin_location" id="punchin_location" hidden readonly>
+                    <input type="text" name="punchin_postcode" id="punchin_postcode" hidden readonly>
+                    <input type="text" name="attendance_date" id="attendance_date" hidden readonly>
+                    <input type="text" name='punchin_time' id="punchin_time" hidden readonly>
+                    <button id="in-btn" type="button" class="btn btn-success w-100">Punch In</button>
+                  </form>
+                  {% endif %}
+                  <div class="flex">
+                      <div class="single">
+                          <strong>Punch In</strong>
+                          <p id="in_timing">{{attendance_data.punchin_time}}</p>
+                      </div>
+                      <div class="single">
+                          <strong>Punch Out</strong>
+                          <p>{{attendance_data.punchout_time}}</p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <div class="col-lg-8 col-md-6">
+              <div class="curve attendance-main table_" style="padding-bottom: 2rem;">
+                  <h4 class="subhead">Attendance Punched</h4>
+                  <table id="addLiveList">
+                    <tr>
+                        <th>Country </th>
+                        <td>{{attendance_data.punchin_country}}</td>
+                    </tr>
+                    <tr>
+                        <th>State</th>
+                        <td>{{attendance_data.punchin_state}}</td>
+                    </tr>
+                    <tr>
+                        <th>Location</th>
+                        <td>{{attendance_data.punchin_location}}</td>
+                    </tr>
+                    <tr>
+                        <th>Postcode</th>
+                        <td>{{attendance_data.punchin_postcode}}</td>
+                    </tr>
+                    <tr>
+                        <th>Attendance Date</th>
+                        <td>{{attendance_data.attendance_date}}</td>
+                    </tr>
+                    <tr>
+                        <th >Attendance Time</th>
+                        <td id="add_time">{{attendance_data.punchin_time}}</td>
+                    </tr>
+                  </table>
+              </div>
+          </div>
+
+          <div class="col-md-12 border-table">
+              <h3>Attendance Record</h3>
+              <div class="table-responsive">
+                  <table class="table table-bordered">
+                      <thead>
+                          <tr>
+                              <th scope="row">S.No</th>
+                              <th scope="row">Date</th>
+                              <th scope="row">Punch In</th>
+                              <th scope="row">Punch Out</th>
+                              <th scope="row">Production</th>
+                              <th scope="row "style="width: 35%;">Work Location</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+
+                              {% for all_data in abc_data %}
+
+
+
+                          <tr>
+                              <th scope="row">{{forloop.counter}}</th>
+                              <td>{{all_data.Date}}</td>
+                              <td>{{all_data.PunchIn}}</td>
+                              <td>{{all_data.PunchOut}}</td>
+                              <td>{{all_data.Production}}</td>
+                              <td>{{all_data.Location}}</td>
+                          </tr>
+                          {% endfor %}
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </div>
+
+
+  {% elif request.user.is_authenticated and   request.user.is_superuser %}
+
+
+<div class="attendance-div">
+    <div class="row">
+
+        <div class="col-md-12 border-table" style="position: sticky;top: 0px;">
+            <h3>Attendance Records</h3>
+
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="row">S.No</th>
+                            <th scope="row">Name</th>
+                            <th scope="row">Phone Number</th>
+                            <th scope="row">Email</th>
+                            <th scope="row">Total days</th>
+                            <th scope="row">Current Status</th>
+                            <th scope="row">View</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for occur in engineer_occurrences %}
+                        {% for engineer in all_engineer %}
+                            {% if engineer.id == occur.engineer %}
+                                <tr>
+                                    <th scope="row">{{ forloop.counter }}</th>
+                                    <td>{{ engineer.first_name }}</td>
+                                    <td>{{ engineer.user_phone }}</td>
+                                    <td>{{ engineer.email }}</td>
+                                    <td>{{ occur.total_occurrences }}</td>
+
+                                    {% if  engineer.attendance_status == "P" %}
+
+                                    <td><div class="user-present">{{ engineer.attendance_status }}</div></td>
+                                    {% elif engineer.attendance_status == "A" %}
+                                    <td><div class="user-absent">{{ engineer.attendance_status }}</div></td>
+                                    {% endif %}
+
+                                    <td>
+                                        <a href="/view-attendance/{{engineer.id}}" class="edit-invoice-btn"><i class="fa-solid fa-eye"></i></a>
+                                        <a href="/download-attendance/{{engineer.id}}"><i class="fa-solid fa-download ii"></i></a>
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+  {% endif %}
+
+
+
+  </section>
+
+  {% include 'user-footer.html' %}
+  {% include 'footer-links.html' %}
+    <script>
+        async function getLocation() {
+            return new Promise((resolve, reject) => {
+                if ("geolocation" in navigator) {
+                    navigator.geolocation.getCurrentPosition(
+                        async (position) => {
+                            try {
+                                const { country, state, full_address, postcode, formattedToday, cur_time } = await getStateAndCity(position.coords.latitude, position.coords.longitude);
+                                resolve({ country, state, full_address, postcode, formattedToday, cur_time });
+                            } catch (error) {
+                                reject(error);
+                            }
+                        },
+                        (error) => {
+                            console.error("Error getting user location:", error);
+                            reject(error);
+                        }
+                    );
+                } else {
+                    console.error("Geolocation is not supported by this browser.");
+                    reject(new Error("Geolocation is not supported by this browser."));
+                }
+            });
+        }
+
+        async function getStateAndCity(latitude, longitude) {
+            let url = `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                console.log('You are inside the getStateAndCity');
+
+                let address = data.address;
+                var country = address.country ? address.country : '';
+                var state = address.state ? address.state : '';
+                var full_address = data.display_name;
+                var postcode = address.postcode ? address.postcode : '';
+
+                var today = new Date();
+                const yyyy = today.getFullYear();
+                var mm = today.getMonth() + 1;
+                var dd = today.getDate();
+
+                if (dd < 10) dd = '0' + dd;
+                if (mm < 10) mm = '0' + mm;
+                var formattedToday = dd + '-' + mm + '-' + yyyy;
+
+                var hours = today.getHours();
+                var minutes = today.getMinutes();
+                minutes = (minutes < 10 ? '0' : '') + minutes;
+                var ampm = hours >= 12 ? 'PM' : 'AM';
+                hours = hours % 12 || 12;
+                hours = (hours < 10 ? '0' : '') + hours;
+                var cur_time = hours + ':' + minutes + ' ' + ampm;
+                return { country, state, full_address, postcode, formattedToday, cur_time};
+            } catch (error) {
+                console.error('Error:', error);
+                throw error;
+            }
+        }
+
+        function updateDifference(first_time) {
+            var currentDate = new Date();
+            var attendanceDate = new Date();
+
+            // Parse the first_time string to get the hours and minutes
+            var firstTimeParts = first_time.split(':');
+            var firstTimeHours = parseInt(firstTimeParts[0]);
+            var firstTimeMinutes = parseInt(firstTimeParts[1].split(' ')[0]);
+            var firstTimeAMPM = firstTimeParts[1].split(' ')[1];
+
+            // Set the attendanceDate to today with the first_time hours and minutes
+            attendanceDate.setHours(firstTimeHours);
+            attendanceDate.setMinutes(firstTimeMinutes);
+
+            // Adjust attendanceDate hours if first_time is PM and not midnight
+            if (firstTimeAMPM === 'PM' && firstTimeHours !== 12) {
+                attendanceDate.setHours(attendanceDate.getHours() + 12);
+            }
+
+            // Adjust attendanceDate hours if first_time is AM and is midnight
+            if (firstTimeAMPM === 'AM' && firstTimeHours === 12) {
+                attendanceDate.setHours(attendanceDate.getHours() - 12);
+            }
+
+            // Calculate the time difference
+            var timeDifference = Math.abs(currentDate - attendanceDate);
+            var hoursDiff = Math.floor(timeDifference / (1000 * 60 * 60));
+            var minutesDiff = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+            var secondsDiff = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+            // Format the difference as HH : MM : SS Hrs
+            var differ = ('0' + hoursDiff).slice(-2) + ' : ' + ('0' + minutesDiff).slice(-2) + ' : ' + ('0' + secondsDiff).slice(-2) + ' Hrs';
+
+            return differ;
+        }
+
+
+        async function inMain() {
+            try {
+                const { country, state, full_address, postcode, formattedToday, cur_time } = await getLocation();
+                document.getElementById("punchin_country").value = country;
+                document.getElementById("punchin_state").value = state;
+                document.getElementById("punchin_location").value = full_address;
+                document.getElementById("punchin_postcode").value = postcode;
+                document.getElementById("attendance_date").value = formattedToday;
+                document.getElementById("punchin_time").value = cur_time;
+                let in_form = document.getElementById('punchin-form');
+                in_form.submit();
+            } catch (error) {
+                console.error("Error getting user location:", error);
+            }
+        }
+
+        async function outMain() {
+            try {
+                const { country, state, full_address, postcode, formattedToday, cur_time } = await getLocation();
+                let in_timing=document.getElementById('in_timing').innerHTML
+
+                let differ=updateDifference(in_timing)
+                document.getElementById("punchout_country").value = country;
+                document.getElementById("punchout_state").value = state;
+                document.getElementById("punchout_location").value = full_address;
+                document.getElementById("punchout_postcode").value = postcode;
+                document.getElementById("attendance_date").value = formattedToday;
+                document.getElementById("punchout_time").value = cur_time;
+                document.getElementById("total_hours").value = differ;
+                let out_form = document.getElementById('punchout-form');
+                out_form.submit();
+            } catch (error) {
+                console.error("Error getting user location:", error);
+            }
+        }
+
+
+
+        document.getElementById("in-btn").addEventListener("click", () => {
+            inMain()
+
+        });
+
+    </script>
+{% if attendance_data.punch_status == "In" %}
+    <script>
+        setInterval(()=>{
+        let incoming_timing=document.getElementById('in_timing').innerHTML
+        let time_show_box=document.getElementById('time_to_show')
+        let time_to_show=updateDifference(incoming_timing)
+        time_show_box.innerHTML=time_to_show
+
+        document.getElementById("out-btn").addEventListener("click", () => {
+            outMain()
+        });
+        },1000)
+
+</script>
+{% endif %}
+
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.js-example-basic-single').select2();
+        });
+    </script>
+</body>
+
+</html>

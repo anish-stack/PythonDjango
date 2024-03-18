@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add Engineer - Project Management System</title>
+  {% include 'header-links.html' %}
+</head>
+
+<body>
+  {% include 'header.html' %}
+  {% if user.is_authenticated and user.is_superuser %}
+  
+
+  <section class="nav-section">
+    {% include 'subtitle.html' %}
+    {% include 'message.html' %}
+    <div class="breadcum">
+        <h2>Add New Engineer </h2>
+        <p> <a href="/">  Dashboard</a> / <a href="/manage-engineers">  Our Engineers</a> / Add Engineer</p>
+    </div>
+
+    <div class="create-project-form p-3">
+        <form class="row g-3" method="post">
+          {% csrf_token %}
+            <div class="col-md-6">
+                <label for="engineer-name" class="form-label">User Name</label>
+                <input type="text" name="engineer_name" class="form-control" id="engineer-name" placeholder="Eng. Full Name" required>
+            </div>
+            <div class="col-md-6">
+                <label for="mobile-number" class="form-label">Mobile Number</label>
+                <input type="number" name="engineer_phone" class="form-control" id="mobile-number" placeholder="Eng. Phone Number*" required>
+            </div>
+            <div class="col-md-6">
+                <label for="inputEmail4" class="form-label">Email Id</label>
+                <input type="email" name="engineer_email" class="form-control" id="inputEmail4" placeholder="Email Id" required>
+            </div>
+            <div class="col-md-6">
+                <label for="selectGender" class="form-label">Select  Gender</label>
+                <select id="inputState" name="engineer_gender" class="form-select" required>
+                  <option>Male</option>
+                  <option>Female</option>
+                  <option>Others</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+              <label for="inputAddress" class="form-label">Address*</label>
+              <input type="text" name="engineer_address" class="form-control" id="inputAddress" placeholder="Enter Eng. Address" required>
+            </div>
+            <div class="col-md-6">
+              <label for="inputAddress" class="form-label">Choose Eng. Password*</label>
+              <input type="text" name="engineer_password" class="form-control" id="inputAddress" placeholder="Enter Password" required>
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn">Add Engineer</button>
+                <a href="/add-engineer/" class="btn btn-warning">Reset</a>
+                <a href="/manage-engineers"><button type="button" class="btn">Cancel</button></a>
+            </div>
+        </form>
+    </div>
+
+  </section>
+  {% include 'admin-footer.html' %}
+
+
+  {% include 'footer-links.html' %}
+  {% else %}
+    <script>
+        window.location.href='/page-note-found'
+    </script>
+    {% endif %}
+</body>
+
+</html>

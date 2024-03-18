@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Project Management System</title>
+    {% include 'header-links.html' %}
+</head>
+
+<body>
+
+    
+    {% include  'header.html' %}
+    
+    
+    {% if user.is_authenticated and user.is_superuser %}
+        
+ 
+        
+  
+
+
+    <section class="nav-section">
+        {% include 'subtitle.html' %}
+        {% include 'message.html' %}
+
+        <!-- -- Dashboard Boxes  -->
+        <div class="dashboard-header">
+            <div class="grid-4">
+                <div class="box">
+                    <div>
+                        <strong class="num">{{all_company_length}}</strong>
+                        <p>Customers</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa-solid fa-users-gear"></i>
+                    </div>
+                </div>
+                <div class="box">
+                    <div>
+                        <strong class="num">{{total_project_length}}</strong>
+                        <p>Projects</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa-solid fa-clipboard-list"></i>
+                    </div>
+                </div>
+                <div class="box">
+                    <div>
+                        <strong class="num">{{purchase_orders | length}}</strong>
+                        <p>Orders</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa-solid fa-briefcase"></i>
+                    </div>
+                </div>
+                <div class="box">
+                    <div>
+                        <strong class="num">{{total_staff}}</strong>
+                        <p>Total Staff</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa-solid fa-barcode"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- grid 60% 40% -->
+        <div class="grid-60-40">
+            <!-- -- Recent Projects --  -->
+            <div class="recent-projects overflow-auto">
+                <div class="submenu-header">
+                    <h2>Recent Projects</h2>
+                    <div class="menu-btn">
+                        <a href="/assigned-works">See All <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <table class="md-table">
+                    <thead>
+                        <tr>
+                            <th>Customer Name</th>
+                            <th>Project Title</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        {% for tp in total_project   %}
+                        <tr>
+                            <td>{{tp.company_name.company_name}}</td>
+                            <td>{{tp.visit_purpose}}</td>
+                            <td>
+                                <div class="
+                                {% if  tp.work_status == 'Pending' %}
+                                pending-btn
+                                {% elif  tp.work_status == 'Done' %}
+                                done-btn
+                                {% elif  tp.work_status == 'Doing' %}
+                                inprogress-btn
+                                {% endif %}
+                                    "></div> {{tp.work_status}}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <!-- -- New Customers  -->
+            <div class="new-customers">
+                <div class="submenu-header">
+                    <h2>New Customer</h2>
+                    <div class="menu-btn">
+                        <a href="/manage-company">See All <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="customers">
+                    
+                    {% for ac  in all_company  %}
+                        
+                    
+                        
+                    <div class="single-customer">
+                        <div class="profile">
+                            <img src="/static/assets/images/admin.png" alt="customer-image">
+                            <div class="customer-details">
+                                <div class="name">{{ac.company_name}}</div>
+                                <small>{{ac.contact_person}}</small>
+                            </div>
+                        </div>
+                        <div class="social-links">
+                            <a target="_blank" href="/tel:{{ac.company_phone}}"><i class="fa-solid fa-circle-user"></i></a>
+                            <a target="_blank" href="/mailto:{{ac.company_email}}"><i class="fa-solid fa-message"></i></a>
+                            <a target="_blank" href="/tel:{{ac.company_phone}}"><i class="fa-solid fa-phone"></i></a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <!-- <div class="single-customer">
+                        <div class="profile">
+                            <img src="../static/assets/images/people/p-2.jpg" alt="customer-image">
+                            <div class="customer-details">
+                                <div class="name">Deepak Verma</div>
+                                <small>SEO Expert</small>
+                            </div>
+                        </div>
+                        <div class="social-links">
+                            <a href=""><i class="fa-solid fa-circle-user"></i></a>
+                            <a href=""><i class="fa-solid fa-message"></i></a>
+                            <a href=""><i class="fa-solid fa-phone"></i></a>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+{% comment %} 
+        <div class="manage-invoice">
+            <div class="submenu-header">
+                <h2>Manage Invoice</h2>
+                <div class="menu-btn">
+                    <a href="#">See All <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="manage-invoice-table overflow-auto">
+                <table class="large-table">
+                    <thead>
+                        <tr>
+                            <th>S No.</th>
+                            <th>Name</th>
+                            <th>Date</th>
+                            <th>Project</th>
+                            <th>Contact Number</th>
+                            <th>Country</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>01</td>
+                            <td>Nikhil Panchal</td>
+                            <td>22-01-2024</td>
+                            <td>Apply For Google</td>
+                            <td>+91 9876543210</td>
+                            <td>India</td>
+                            <td>₹ 10L</td>
+                            <td>
+                                <div class="pending-btn"></div> pending
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>02</td>
+                            <td>Nikhil Panchal</td>
+                            <td>22-01-2024</td>
+                            <td>Apply For Google</td>
+                            <td>+91 9876543210</td>
+                            <td>India</td>
+                            <td>₹ 10L</td>
+                            <td>
+                                <div class="pending-btn"></div> pending
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>03</td>
+                            <td>Nikhil Panchal</td>
+                            <td>22-01-2024</td>
+                            <td>Apply For Google</td>
+                            <td>+91 9876543210</td>
+                            <td>India</td>
+                            <td>₹ 10L</td>
+                            <td>
+                                <div class="pending-btn"></div> pending
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>04</td>
+                            <td>Nikhil Panchal</td>
+                            <td>22-01-2024</td>
+                            <td>Apply For Google</td>
+                            <td>+91 9876543210</td>
+                            <td>India</td>
+                            <td>₹ 10L</td>
+                            <td>
+                                <div class="pending-btn"></div> pending
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div> {% endcomment %}
+
+    </section>
+
+    {% include 'admin-footer.html' %}
+    {% include 'footer-links.html' %}
+    {% elif user.is_authenticated and not user.is_superuser %}
+    <script>
+        window.location.href='/user-dashboard'
+    </script>
+    {% else %}
+    <script>
+        window.location.href='/page-note-found'
+    </script>
+    {% endif %}
+</body>
+
+</html>

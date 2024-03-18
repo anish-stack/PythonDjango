@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Assigned Works - Project Management System</title>
+  {% include 'header-links.html' %}
+</head>
+
+<body>
+  {% include 'header.html' %}
+  {% if user.is_authenticated and user.is_superuser %}
+
+
+  <section class="nav-section">
+    {% include 'subtitle.html' %}
+    {% include 'message.html' %}
+
+    <div class="breadcum">
+        <div class="flex">
+            <div>
+                <h2>Assigned Works</h2>
+                <p> <a href="/">  Dashboard</a> / Assigned Works</p>
+            </div>
+            <div class="assign-engineer-btn p-2">
+                <a href="/assign-engineer"><i class="fa-regular fa-square-plus"></i> Assign Engineer</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="assigned-works-table editable-table overflow-auto" style="background: white;">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table large-table">
+                    <thead>
+                      <tr>
+                        <th scope="col">S.no</th>
+                        <th scope="col">Company Name</th>
+                        <th scope="col">Manager Name</th>
+                        <th scope="col">Engineers</th>
+                        <th scope="col">Purpose Of Visit</th>
+                        <th scope="col">Contact Number</th>
+                        <th scope="col">Address</th> 
+                        <th scope="col">Machine Type</th>
+                        <th scope="col">Update</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for i in assigned_data %}
+                      <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{i.company_name}}</td>
+                        <td>{{i.manager_name}}</td>
+                        <td>{{i.engineer_one}}&nbsp;|&nbsp;{{i.engineer_two}}&nbsp;|&nbsp;{{i.engineer_three}}</td>
+                        <td>{{i.visit_purpose}}</td>
+                        <td>{{i.company_name.company_phone}} </td>
+                       
+
+                        <td>{{i.company_name.company_address}}</td>
+                        <td>{{i.machine_type}}</td>
+                       
+                          
+                        <td>
+                            <a href="/update-assigned-work/{{i.id}}"><i class="fa-regular fa-pen-to-square"></i></a>
+                            <a href="/delete-assigned-work/{{i.id}}"><i class="fa-solid fa-trash-can-arrow-up"></i></a>
+                        </td>
+                      </tr>
+                      {% endfor %}
+                      
+                    </tbody>
+                </table>
+                <div class="pagination">
+                  {%if assigned_data.has_previous %} 
+                      <a class="btn prev" href="?page={{assigned_data.previous_page_number}}">Previous</a> 
+                  {% endif %}
+                  <span class="num" >{{assigned_data.number}}</span> 
+                 
+                  {%if assigned_data.has_next %} 
+                      <a class="btn next" href="?page={{assigned_data.next_page_number}}">Next</a> 
+                  {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+  </section>
+  {% include 'admin-footer.html' %}
+
+
+  {% include 'footer-links.html' %}
+  {% else %}
+  <script>
+      window.location.href='/page-note-found'
+  </script>
+  {% endif %}
+</body>
+
+</html>

@@ -1,0 +1,6 @@
+show reimbursement in admin panel
+generate pdf of report
+copy report link
+dowload pdf
+admin footer 
+#remove add report from user footer

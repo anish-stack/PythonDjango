@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Mark Attendance</title>
+  {% include 'header-links.html' %}
+</head>
+<body>
+    {% include 'header.html' %}
+    {% if request.user.is_authenticated and  request.user.is_superuser %}
+  <section class="nav-section">
+    {% include 'subtitle.html' %}
+    {% include 'message.html' %}
+
+    <div class="breadcum" >
+        <div>
+            <h2>Mark Attendance</h2>
+            <p><a href="/">  Dashboard</a> / Attendance</p>
+        </div>
+    </div>
+    
+    <div class="attendance-div">
+      <div class="row">
+          <div class="col-lg-8 col-md-6" style="position: sticky; top: 0px;">
+              <div class="curve attendance-main table_" style="padding-bottom: 2rem;">
+                  <h4 class="subhead">User Profile</h4>
+                  <table id="addLiveList">
+                    <tr>
+                        <th>Name </th>
+                        <td>{{eng_to_get.first_name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>{{eng_to_get.email}}</td>
+                    </tr>
+                    <tr>
+                        <th>Phone</th>
+                        <td>{{eng_to_get.user_phone}}</td>
+                    </tr>
+                    <tr>
+                        <th>Gender</th>
+                        <td>{{eng_to_get.user_gender}}</td>
+                    </tr>
+                    <tr>
+                        <th>Address</th>
+                        <td>{{eng_to_get.user_address}}</td>
+                    </tr>
+                    <tr>
+                        <th>Current Status</th>
+                        <td id="add_time">{{eng_to_get.attendance_status}}</td>
+                    </tr>
+                  </table>
+              </div>
+          </div>
+
+          <div class="col-md-12 border-table">
+              <h3>Attendance Record</h3>
+              <div class="table-responsive">
+                  <table class="table table-bordered">
+                      <thead>
+                          <tr>
+                              <th scope="row">S.No</th>
+                              <th scope="row">Date</th>
+                              <th scope="row">Punch In</th>
+                              <th scope="row">Punch Out</th>
+                              <th scope="row">Production</th>
+                              <th scope="row" style="width: 25%;">Start Location</th>
+                              <th scope="row" style="width: 25%;">End Location</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                        
+                        {% for all_data in particular_attendance %}
+                            
+                        
+                            
+                          <tr>
+                              <th scope="row">1</th>
+                              <td>{{all_data.attendance_date}}</td>
+                              <td>{{all_data.punchin_time}}</td>
+                              <td>{{all_data.punchout_time}}</td>
+                              <td>{{all_data.total_hours}}</td>
+                              <td>{{all_data.punchin_location}}</td>
+                              <td>{{all_data.punchin_location}}</td>
+                          </tr>
+                          {% endfor %}
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </div>
+ {% else %}
+  <script>
+    window.location.href='/page-not-found'
+  </script>
+
+  {% endif %}
+  </section>
+
+  <div class="mobile-footer">
+    <div class="footer-grid">
+        <a href="/reimbursement">
+            <div>
+                <i class="fa-solid fa-snowflake"></i>
+            </div>
+        </a>
+        <a href="/user-attendance">
+            <div>
+                <i class="fa-solid fa-circle-plus"></i>
+            </div>
+        </a>
+        <!-- <a href="./user-profile.html"> -->
+        <a href="/user-profile">
+            <div>
+                <i class="fa-solid fa-circle-user"></i>
+            </div>
+        </a>
+    </div>
+  </div>
+  {% include 'footer-links.html' %}
+
+  <style>
+    @media print {
+
+        nav, .breadcum{
+            display: none;
+        }
+
+        .logout{
+            display: none ; !important
+        }
+        .sidebar.close ,.sidebar.open {
+            width: 0px;
+            display: none;
+          }
+          .sidebar.close~.nav-section {
+            left: 0px;
+            width: 100%;
+          }
+          .sidebar{
+            display: none;
+          }
+          .nav-section .nav-content .bx-menu {
+            display: none;
+          }
+          .nav-section {
+            position: relative;
+            background: #E4E9F7;
+            min-height: 100vh;
+            left: 0px;
+            width: 100%;
+            transition: all 0.5s ease;
+        }
+        table{
+            max-width: 100% !important;
+        }
+        .performa-invoice.p-2.py-5.large-table{
+            overflow: hidden;
+          }
+
+        /* Apply styles for printing */
+        body {
+          zoom: 70%; /* Set zoom level to 50% */
+          overflow-x: hidden !important;
+        }
+        html , .row.table-lines.mt-5{
+            overflow-x: hidden;
+        }
+        .btn-primary{
+            display: none !important;
+        }
+        .mt-2.py-5.bg-body{
+            display: none !important;
+        }
+
+        body::-webkit-scrollbar {
+            display: none;
+          }
+          
+          /* Hide scrollbar for IE, Edge and Firefox */
+          body {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+
+          }
+          .field-service-report.text-center {
+            background: rgb(125, 176, 217);
+            color: white;
+            text-decoration: underline;
+            width: 98%;
+            margin: auto;
+            margin-bottom: 1rem;
+        }
+
+        @page {
+            size: auto; /* Set page size to auto */
+            margin: 0; /* Remove default margin */
+            counter-increment: none; /* Remove page number */
+          }
+    }
+</style>
+
+{% if 'download-attendance' in request.path %}
+    <script>
+        function printPage() {
+            window.print(); // Initiate the print operation
+        }
+        printPage()
+    </script>
+{% endif %}
+    
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.js-example-basic-single').select2();
+        });
+    </script>
+</body>
+
+</html>

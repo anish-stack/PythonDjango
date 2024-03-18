@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 style="color:red">hello world</h1>
+    <table style="border: 2px solid black; text-align: center; padding-top: 10px;">
+        <caption> Report Of All Project</caption>
+        <thead>
+            <tr>
+            <th>name</th>
+            <th>email</th>
+            <th>password</th>
+        </tr>
+        </thead>
+        <br>
+        <tbody>
+            {% for i in users %}
+            <tr style="color: blue; margin-top: 200px;">
+            <td>{{i.first_name}}</td>
+            <td>{{i.email}}</td>
+            <td>{{i.visible_password}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <h1 style="text-align: center;">hello world khatam</h1>
+    <h1 style="text-align: center;"> Report data start</h1>
+    <table>
+        <caption>
+            Report
+        </caption>
+        <thead>
+            <tr>
+            <th>1</th>
+            <th>2</th>
+            <th>3</th>
+            <th>4</th>
+            <th>5</th>
+            <th>5</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for rp in report_data %}
+            <tr>
+                <td>{{rp.day_count}}</td>
+                <td>{{rp.report_date}}</td>
+                <td>{{rp.engineer.first_name}}</td>
+                <td>{{rp.starting_time}}</td>
+                <td>{{rp.ending_time}}</td>
+                <td>{{rp.total_hours}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <img src="/home/static/assets/images/admin.png" alt="hello" style="height: 50px; width: 50px; background-color: red;">
+</body>
+</html>

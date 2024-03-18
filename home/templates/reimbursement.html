@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8" />
+    {% include 'header-links.html' %}
+</head>
+
+<body>
+    {% include 'header.html' %}
+    {% if user.is_authenticated and user.is_superuser %}
+
+  <section class="nav-section">
+    {% include 'subtitle.html' %}
+    {% include 'message.html' %}
+
+    <div class="overflow-auto">
+        <div class="performa-invoice p-2 py-5 large-table">
+            <div class="row">
+                <div class="col-12 mb-2" style="display: grid;grid-template-columns:1fr 3fr;width:100%">
+                    <div class="col">
+                        <img src="/static/assets/images/logo.png" alt="emambit logo">
+                    </div>
+                    <div class="text-end px-5" style="background: #84848484;">
+                        <h2><span style="color: red;">EM</span>AMBIT PVT. LTD.</h2>
+                        <small style="color: red;"><i>Our passion is your success</i></small>
+                    </div>
+                </div>
+                <div class="col-12 text-center mb-1" style="background: #E4E9F7;color: #3d4584">
+                    <h3>Reimbursement</h3>
+                </div>
+                <div class="col-7">
+                    <table class="border-table">
+                        <tr>
+                            <th>Employee Name</th>
+                            <td>Hitesh Sharma</td>
+                        </tr>
+                        <tr>
+                            <th>Designation</th>
+                            <td>Sr. Electric Engineer</td>
+                        </tr>
+                        <tr>
+                            <th>Manager Name</th>
+                            <td>Mr. Bhupendra Srivastava</td>
+                        </tr>
+                        <tr>
+                            <th>Department</th>
+                            <td>Installation and commissioning</td>
+                        </tr>
+                        <tr>
+                            <th>Customer name</th>
+                            <td>Amir Polymer Mayapuri Delhi, Zahonero Greater Noida and Amcor Flexible Gujrat</td>
+                        </tr>
+                        <tr>
+                            <th>Visit Purpose:</th>
+                            <td>Machine Installation and Commissioning</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-5">
+                    <table class="border-table">
+                        <tr>
+                            <th>Date </th>
+                            <td>01-12-23 </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-12 mt-4">
+                    <div class="description-table reimburement-table">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                              <tr>
+                                <th scope="col-1">S. No</th>
+                                <th scope="col-8">Visit Period</th>
+                                <th scope="col-1">Total Days</th>
+                                <th scope="col-1">Value</th>
+                                <th scope="col-1">Total</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td scope="row">1</th>
+                                <td>01-12-23 to 11-12-23</td>
+                                <td>9</td>
+                                <td></td>
+                                <td></td>
+                              </tr>
+                              <tr>
+                                <td scope="row">2</th>
+                                <td>01-12-23 to 11-12-23</td>
+                                <td>9</td>
+                                <td></td>
+                                <td></td>
+                              </tr>
+                              <tr>
+                                <td scope="row">3</th>
+                                <td>01-12-23 to 11-12-23</td>
+                                <td>9</td>
+                                <td></td>
+                                <td></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                    </div>
+                </div>
+                <div class="col-8">
+                </div>
+                <div class="col-4">
+                    <table class="border-table">
+                        <tr>
+                            <th>SUBTOTAL</th>
+                            <td>₹ 3,600.00</td>
+                        </tr>
+                        <tr>
+                            <th>LESS CASH ADVANCE</th>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>TOTAL REIMBURSEMENT</th>
+                            <td>₹ 3,600.00</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><p class="text-center">Don't forget to attach receipts</p></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-12 mt-3">
+                    <table class="border-table signature-table">
+                        <tr>
+                            <th>Employee Signature : </th>
+                            <td></td>
+                            <th>Date : </th>
+                            <td>31-12-23</td>
+                        </tr>
+                        <tr>
+                            <th>Approval Signature : </th>
+                            <td></td>
+                            <th>Date : </th>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-12 mt-3 text-center">
+                    <div class="mt-1"><strong>Thank you for your business!</strong></div>
+                    <div class="address">
+                        <p>EMAMBIT PRIVATE LIMITED</p>
+                        <p>TOWER-B,UNIT NO:- B-06. GROUND FLOOR,LOGIX TECHNOVA ,IT/ITES BUILDING</p>
+                        <p>PLOT NO-4, SECTOR-132,NOIDA,UTTAR PRADESH-201304,</p>
+                        <p>Phone No. +91-9811226914, Email: accounts@emambit.com Web: www.emambit.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  </section>
+  {% include 'admin-footer.html' %}
+
+  {% include 'footer-links.html' %}
+  {% else %}
+  <script>
+      window.location.href='/page-note-found'
+  </script>
+  {% endif %}
+</body>
+
+</html>

@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8" />
+  {% include 'header-links.html' %}
+</head>
+
+<body>
+    {% include 'header.html' %}
+
+  <section class="nav-section">
+    {% include 'subtitle.html' %}
+    {% include 'message.html' %}
+
+    <div class="breadcum">
+        <div class="flex">
+            <div>
+                <h2>Total Orders</h2>
+                <p> <a href="/">  Dashboard</a> / Total Orders</p>
+            </div>
+            <div class="assign-engineer-btn p-2">
+                <a href="/create-orders"><i class="fa-regular fa-square-plus"></i> Add New Order</a>
+            </div>
+        </div>
+    </div>
+    <div class="manage-invoice total-projects mt-3">
+        <div class="submenu-header">
+          <h2>Total Orders</h2>
+        </div>
+  
+        <div class="invoice-table overflow-auto">
+          <table class="large-table">
+            <thead>
+              <tr>
+                <th style="width: 20%;">Order No.</th>
+                <th>Company Name</th>
+                <th>Quantity</th>
+                <th>Description</th>
+                <th>Total Amount</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+              {% for po  in purchase_data.object_list %} 
+              <tr>
+                <td>{{po.order_no}}</td>
+                <td>{{po.purchase_company.purchase_name}}</td>
+                <td>{{po.quantity}} {{ po.unit}}</td>
+                <td>{{po.project_description}}</td>
+                <td>{{po.final_amount}}</td>
+                <td>  <a href="/delete-purchase-order/{{po.id}}"><i class="fa-solid fa-trash-can-arrow-up"></i></a>
+                     <a href="/view-order-report/{{po.id}}" class="edit-invoice-btn"><i class="fa-solid fa-eye"></i></a>
+                    <a href="/download-order-report/{{po.id}}" class="down-pdf-btn"> <i class="fa-solid fa-download"></i></a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <div class="pagination">
+            {%if purchase_data.has_previous %} {# whether the previous page exists #}
+                <a class="btn prev" href="?page={{purchase_data.previous_page_number}}">Previous</a> {# link to the prev page #}
+            {% endif %}
+            <span class="num">{{purchase_data.number}}</span> {# the current page number #}
+           
+            {%if purchase_data.has_next %} {# whether the next page exists #}
+                <a class="btn next" href="?page={{purchase_data.next_page_number}}">Next</a> {# link to the next page #}
+            {% endif %}
+          </div>
+        </div>
+    </div>
+  </section>
+  {% include 'admin-footer.html' %}
+
+  {% include 'footer-links.html' %}
+</body>
+
+</html>
