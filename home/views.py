@@ -26,7 +26,7 @@ def equipment_view(request):
 
     equipment_data=[]
     for i in equipment_object:
-        if len(i.equipment) < 0:
+        if i.equipment is not None:
             equipment_data.append(i)
         
 
