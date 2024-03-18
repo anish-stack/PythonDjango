@@ -84,6 +84,8 @@ class AssignEngineer(models.Model):
     work_status=models.CharField(max_length=100,blank=True,null=True,default='Doing')
     project_link=models.CharField(max_length=1000,null=True,blank=True)
     download_link=models.CharField(max_length=254,null=True,blank=True)
+    equipment = models.TextField(max_length=1000,null=True,blank=True)
+    
     def __str__(self) -> str:
         return f'{self.company_name}--{self.visit_purpose}'
 

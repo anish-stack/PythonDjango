@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    {% include 'header-links.html' %}
+
+<body>
+    {% include 'header.html' %}
+    {% if user.is_authenticated and user.is_superuser %}
+
+    <section class="nav-section">
+        {% include 'subtitle.html' %}
+        {% include 'message.html' %}
+
+        <div class="breadcum">
+            <h2>Project List</h2>
+            <p> <a href="/"> Dashboard</a> / Project Lists</p>
+        </div>
+
+        <div class="row py-2 mb-2 mx-1 project-list" style="background: white;">
+
+            <form>
+                <div class="col-md-12 mb-2">
+                    <div class="row mt-2">
+                        <div class="col-md-3">
+                            <h5>Select Engineer : </h5>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="js-example-basic-single" class="form-control" name="get_company">
+                                {% for cl in all_company %}
+                                <option value="{{cl}}">{{cl}}</option>
+                                {% endfor %}
+                                      
+                            </select>
+                        </div>
+                        <div class="col-md-2 "><button type="submit" class="butn">Search</button></div>
+
+
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+        <div class="assign-engineer-table overflow-auto editable-table" style="background: white;">
+            <div class="row">
+              <div class="col-md-12">
+                <table class="table large-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Id</th>
+                      <th scope="col">Manager Name</th>
+                      <th scope="col">Mobile Number</th>
+                      <th scope="col">Equipments</th>
+                      <th scope="col">Address</th>
+                      <th scope="col">Update</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for i in data.object_list %}
+                    <tr>
+                      <td>{{forloop.counter}}</td>
+                      <td>{{i.first_name}}</td>
+                      <td>{{i.user_phone}}</td>
+                      <td>{{i.email}}</td>
+                      <td>{{i.user_address}}</td>
+                      <td>{{i.visible_password}}</td>
+                      <td>
+                        <a href="/update-engineer/{{i.id}}">Approve</a>
+                        <a href="/delete-engineer/{{i.id}}">No Approve</a>
+                      </td>
+                    </tr>
+                    {% endfor %}
+      
+                  </tbody>
+                </table>
+                <div class="pagination">
+                  {%if data.has_previous %} 
+                      <a class="btn prev" href="?page={{data.previous_page_number}}">Previous<a> 
+                  {% endif %}
+                  <span class="num" >{{data.number}}</span> 
+                 
+                  {%if data.has_next %} 
+                      <a class="btn next" href="?page={{data.next_page_number}}">Next</a> 
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+        </div>
+
+    </section>
+    {% include 'admin-footer.html' %}
+    {% include 'footer-links.html' %}
+    {% else %}
+    <script>
+        window.location.href = '/page-note-found'
+    </script>
+    {% endif %}
+    <script>
+        function copyLink(id) {
+            var textField = document.createElement('textarea');
+            textField.innerText = id;
+            document.body.appendChild(textField);
+            textField.select();
+            document.execCommand('copy');
+            textField.remove();
+            alert("Link Copied to Clipboard: " + id);
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('.js-example-basic-single').select2();
+        });
+        function back_to_project_list() {
+            window.location.href = '/project-lists/'
+        }
+    </script>
+</body>
+
+</html>

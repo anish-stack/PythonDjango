@@ -18,8 +18,13 @@ import os
 
 
 
+
 # home_function
 @login_required(login_url='/login')
+
+def equipment_view(request):
+    return render(request,'equipment-page.html')
+
 def home_view(request):
     all_company=ClientCompanyInfo.objects.all().order_by('-id')
     all_company_length=len(all_company)
@@ -459,6 +464,7 @@ def assignEngineer_view(request):
             machine_type=request.POST.get('machine_type')
             leave_date=request.POST.get('leave_date')
             reach_date=request.POST.get('reach_date')
+            equipment = request.POST.get('equipment')
             travel_by=AddTravelBy.objects.get(travel_by=request.POST.get('travel'))
             assign_data=AssignEngineer(
             company_name=company,
@@ -467,7 +473,8 @@ def assignEngineer_view(request):
             machine_type=machine_type,
             leave_date=leave_date,
             reach_date=reach_date,
-            travel_by=travel_by
+            travel_by=travel_by,
+            equipment=equipment
             )
             if len(engineer_one) != 0:
                 assign_data.engineer_one=engineer_one[0]

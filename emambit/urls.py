@@ -95,6 +95,8 @@ urlpatterns = [
     path('excel-attendance/<month_no>/',attendance_to_download),
     path('download-advance/<cur_month>/',downloadAdvance),
     path('page-not-found',ForZeroFor),
+    
+    path('/equipment-page',equipment_view)
  ]
 
 
