@@ -27,11 +27,22 @@ def equipment_view(request):
 
     equipment_data=[]
     for i in equipment_object:
-        if len(i.equipment) <=0:
+        if len(i.equipment) < 0:
             equipment_data.append(i)
         
 
     return render(request,'equipment-page.html',{'equipment_data':equipment_data})
+
+def delete_equipment(request,id):
+    try:
+        data_to_delete=AssignEngineer.objects.get(id=id)
+        data_to_delete.equipment=''
+        data_to_delete.save()
+        messages.success(request,'Equipment Recived')
+        return redirect('/equipment-page')
+    except:
+        messages.error(request,'something went wrong')
+        return redirect('/equipment-page')
 
 def home_view(request):
     all_company=ClientCompanyInfo.objects.all().order_by('-id')

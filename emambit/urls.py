@@ -96,7 +96,8 @@ urlpatterns = [
     path('download-advance/<cur_month>/',downloadAdvance),
     path('page-not-found',ForZeroFor),
     
-    path('equipment-page/',equipment_view)
+    path('/equipment-page',equipment_view),
+    path('delete-equipment/<id>/',delete_equipment),
  ]
 
 

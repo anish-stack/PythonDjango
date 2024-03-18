@@ -57,7 +57,8 @@
                     </tr>
                   </thead>
                   <tbody>
-                    {% for i in data.object_list %}
+                    {% for i in equipment_data.object_list %}
+                    print(equipment_data)
                     <tr>
                       <td>{{forloop.counter}}</td>
                       <td>{{i.first_name}}</td>
