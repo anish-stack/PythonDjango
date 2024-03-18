@@ -23,7 +23,15 @@ import os
 @login_required(login_url='/login')
 
 def equipment_view(request):
-    return render(request,'equipment-page.html')
+    equipment_object=AssignEngineer.objects.all()
+
+    equipment_data=[]
+    for i in equipment_object:
+        if len(i.equipment) <=0:
+            equipment_data.append(i)
+        
+
+    return render(request,'equipment-page.html',{'equipment_data':equipment_data})
 
 def home_view(request):
     all_company=ClientCompanyInfo.objects.all().order_by('-id')
