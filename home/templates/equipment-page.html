@@ -19,7 +19,7 @@
 
         <div class="row py-2 mb-2 mx-1 project-list" style="background: white;">
 
-            <form>
+            <!-- <form>
                 <div class="col-md-12 mb-2">
                     <div class="row mt-2">
                         <div class="col-md-3">
@@ -35,45 +35,43 @@
                         </div>
                         <div class="col-md-2 "><button type="submit" class="butn">Search</button></div>
 
-
                     </div>
 
                 </div>
-            </form>
+            </form> -->
         </div>
 
         <div class="assign-engineer-table overflow-auto editable-table" style="background: white;">
             <div class="row">
               <div class="col-md-12">
                 <table class="table large-table">
-                  <thead>
-                    <tr>
-                      <th scope="col">Id</th>
-                      <th scope="col">Manager Name</th>
-                      <th scope="col">Mobile Number</th>
-                      <th scope="col">Equipments</th>
-                      <th scope="col">Address</th>
-                      <th scope="col">Update</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for i in equipment_data.object_list %}
-                    print(equipment_data)
-                    <tr>
-                      <td>{{forloop.counter}}</td>
-                      <td>{{i.first_name}}</td>
-                      <td>{{i.user_phone}}</td>
-                      <td>{{i.email}}</td>
-                      <td>{{i.user_address}}</td>
-                      <td>{{i.visible_password}}</td>
-                      <td>
-                        <a href="/update-engineer/{{i.id}}">Approve</a>
-                        <a href="/delete-engineer/{{i.id}}">No Approve</a>
-                      </td>
-                    </tr>
-                    {% endfor %}
-      
-                  </tbody>
+                    <thead>
+                        <tr>
+                          {% comment %} <th scope="col">Id</th> {% endcomment %}
+                          <th scope="col">Manager Name</th>
+                          {% comment %} <th scope="col">Mobile Number</th> {% endcomment %}
+                          <th scope="col">Equipments</th>
+                          {% comment %} <th scope="col">Address</th> {% endcomment %}
+                          <th scope="col">Recive</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in equipment_data %}
+                        <tr>
+                          {% comment %} <td>{{forloop.counter}}</td> {% endcomment %}
+                          <td>{{i.first_name}}</td>
+                          <td>{{i.equipment}}</td>
+                          {% comment %} <td>{{i.email}}</td> {% endcomment %}
+                          {% comment %} <td>{{i.user_address}}</td> {% endcomment %}
+                          {% comment %} <td>{{i.visible_password}}</td> {% endcomment %}
+                          <td>
+                            {% comment %} <a href="/update-engineer/{{i.id}}">Approve</a> {% endcomment %}
+                            <a href="/delete-equipment/{{i.id}}">Recive</a>
+                          </td>
+                        </tr>
+                        {% endfor %}
+          
+                    </tbody>
                 </table>
                 <div class="pagination">
                   {%if data.has_previous %} 
