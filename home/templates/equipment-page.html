@@ -14,12 +14,13 @@
 
         <div class="breadcum">
             <h2>Project List</h2>
-            <p> <a href="/"> Dashboard</a> / Project Lists</p>
+            <p> <a href="/"> Dashboard</a> / Equipments</p>
         </div>
 
-        <div class="row py-2 mb-2 mx-1 project-list" style="background: white;">
+        <!-- --- Search Filter ---  -->
+        <!-- <div class="row py-2 mb-2 mx-1 project-list" style="background: white;">
 
-            <!-- <form>
+            <form>
                 <div class="col-md-12 mb-2">
                     <div class="row mt-2">
                         <div class="col-md-3">
@@ -38,53 +39,193 @@
                     </div>
 
                 </div>
-            </form> -->
-        </div>
+            </form>
+        </div> -->
 
-        <div class="assign-engineer-table overflow-auto editable-table" style="background: white;">
+        <!-- --- Data ---  -->
+        <!-- <div class="assign-engineer-table overflow-auto editable-table" style="background: white;">
             <div class="row">
               <div class="col-md-12">
                 <table class="table large-table">
                     <thead>
                         <tr>
-                          {% comment %} <th scope="col">Id</th> {% endcomment %}
+                          <th scope="col">S.No</th>
+                          <th scope="col">Leave Date</th> 
                           <th scope="col">Manager Name</th>
                           <th scope="col">Company Name</th> 
-                          <th scope="col">Equipments</th>
-                          {% comment %} <th scope="col">Address</th> {% endcomment %}
-                          <th scope="col">Recive</th>
+                          <th scope="col">Given Equipments</th>
+                          <th scope="col">Receive Now</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for i in equipment_data %}
                         <tr>
-                          {% comment %} <td>{{forloop.counter}}</td> {% endcomment %}
+                          <td>{{forloop.counter}}</td>
+                          <td>{{i.leave_date}}</td> 
                           <td>{{i.manager_name.first_name}}</td>
                           <td>{{i.company_name}}</td> 
                           <td>{{i.equipment}}</td>
-                          {% comment %} <td>{{i.user_address}}</td> {% endcomment %}
-                          {% comment %} <td>{{i.visible_password}}</td> {% endcomment %}
-                          <td>
-                            {% comment %} <a href="/update-engineer/{{i.id}}">Approve</a> {% endcomment %}
-                            <a href="/delete-equipment/{{i.id}}">Recive</a>
+                          <td class="receive-btn">
+                            <a href="/delete-equipment/{{i.id}}">Recive <i class="fa-solid fa-circle-check"></i></a>
                           </td>
                         </tr>
                         {% endfor %}
           
                     </tbody>
                 </table>
-                <div class="pagination">
-                  {%if data.has_previous %} 
-                      <a class="btn prev" href="?page={{data.previous_page_number}}">Previous<a> 
-                  {% endif %}
-                  <span class="num" >{{data.number}}</span> 
-                 
-                  {%if data.has_next %} 
-                      <a class="btn next" href="?page={{data.next_page_number}}">Next</a> 
-                  {% endif %}
-                </div>
+                {% comment %}
+                    <div class="pagination">
+                    {%if data.has_previous %} 
+                        <a class="btn prev" href="?page={{data.previous_page_number}}">Previous<a> 
+                    {% endif %}
+                    <span class="num" >{{data.number}}</span> 
+                    
+                    {%if data.has_next %} 
+                        <a class="btn next" href="?page={{data.next_page_number}}">Next</a> 
+                    {% endif %}
+                    </div>
+                {% endcomment %}
               </div>
             </div>
+        </div> -->
+
+        <div class="project-list-links">
+            <div class="links p-2">
+                <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                    <li class="nav-item" role="presentation" >
+                      <div class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true"><i class="fa-regular fa-life-ring"></i> All </div>
+                    </li>
+                
+                    <li class="nav-item" role="presentation">
+                      <div class="nav-link" id="pills-pending-tab" data-bs-toggle="pill" data-bs-target="#pills-pending" role="tab" aria-controls="pills-pending" aria-selected="false"><i class="fa-solid fa-clock-rotate-left"></i> Approval Pending</div>
+                    </li>
+                </ul>
+            </div>
+    
+            <!-- --------------------------------------------------------- -->
+    
+            <div>
+                <div  class="tab-content project-cards-main mt-4 p-2" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                        
+                        <!-- --- All  Work  Done ✅ or Doing 🤘 -->
+                        <div class="assign-engineer-table overflow-auto editable-table" style="background: white;">
+                            <div class="row">
+                              <div class="col-md-12">
+                                <table class="table large-table">
+                                    <thead>
+                                        <tr>
+                                          <th scope="col">S.No</th>
+                                          <th scope="col">Leave Date</th> 
+                                          <th scope="col">Manager Name</th>
+                                          <th scope="col">Company Name</th> 
+                                          <th scope="col">Given Equipments</th>
+                                          <th scope="col">Received Equipments</th>
+                                          <th scope="col">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for i in equipment_data %}
+                                        <tr>
+                                          <td>{{forloop.counter}}</td>
+                                          <td>{{i.leave_date}}</td> 
+                                          <td>{{i.manager_name.first_name}}</td>
+                                          <td>{{i.company_name}}</td> 
+                                          <td>{{i.equipment}}</td>
+                                          <td>
+                                            --- Have to bee Shown --- 
+                                          </td>
+                                          <td class="receive-btn">
+                                            <a href="javascript:void(0)">Recived <i class="fa-solid fa-circle-check"></i></a>
+                                          </td>
+                                        </tr>
+                                        {% endfor %}
+                          
+                                    </tbody>
+                                </table>
+                                {% comment %} 
+                                    <div class="pagination">
+                                    {%if data.has_previous %} 
+                                        <a class="btn prev" href="?page={{data.previous_page_number}}">Previous<a> 
+                                    {% endif %}
+                                    <span class="num" >{{data.number}}</span> 
+                                    
+                                    {%if data.has_next %} 
+                                        <a class="btn next" href="?page={{data.next_page_number}}">Next</a> 
+                                    {% endif %}
+                                    </div>
+                                {% endcomment %}
+                              </div>
+                            </div>
+                        </div>
+                        
+    
+                    </div>
+                    
+        
+                    <div class="tab-pane fade" id="pills-pending" role="tabpanel" aria-labelledby="pills-pending-tab">
+                        
+                        <!-- --- Approval Pending -->
+                        <div class="assign-engineer-table overflow-auto editable-table" style="background: white;">
+                            <div class="row">
+                              <div class="col-md-12">
+                                <table class="table large-table">
+                                    <thead>
+                                        <tr>
+                                          <th scope="col">S.No</th>
+                                          <th scope="col">Leave Date</th> 
+                                          <th scope="col">Manager Name</th>
+                                          <th scope="col">Company Name</th> 
+                                          <th scope="col">Given Equipments</th>
+                                          <th scope="col">Received Equipments</th>
+                                          <th scope="col">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for i in equipment_data %}
+                                        <tr>
+                                          <td>{{forloop.counter}}</td>
+                                          <td>{{i.leave_date}}</td> 
+                                          <td>{{i.manager_name.first_name}}</td>
+                                          <td>{{i.company_name}}</td> 
+                                          <td>{{i.equipment}}</td>
+                                          <td>
+                                            <textarea class="form-control" placeholder="Enter Equipments" id="floatingTextarea"></textarea>
+                                          </td>
+                                          <td class="receive-btn">
+                                            <a href="/delete-equipment/{{i.id}}">Recive Now <i class="fa-solid fa-circle-check"></i></a>
+                                          </td>
+                                        </tr>
+                                        {% endfor %}
+                          
+                                    </tbody>
+                                </table>
+                                {% comment %}
+                                    <div class="pagination">
+                                    {%if data.has_previous %} 
+                                        <a class="btn prev" href="?page={{data.previous_page_number}}">Previous<a> 
+                                    {% endif %}
+                                    <span class="num" >{{data.number}}</span> 
+                                    
+                                    {%if data.has_next %} 
+                                        <a class="btn next" href="?page={{data.next_page_number}}">Next</a> 
+                                    {% endif %}
+                                    </div>
+                                {% endcomment %}
+                              </div>
+                            </div>
+                        </div>
+
+                    </div>
+        
+                </div>
+            </div>
+    
+    
+    
+    
+    
+            <!-- --------------------- -->
         </div>
 
     </section>
