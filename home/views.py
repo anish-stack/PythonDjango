@@ -51,15 +51,20 @@ def equipment_view(request):
 
 # home_function
 @login_required(login_url='/login')
-def delete_equipment(request,id):
-    try:
-        data_to_delete=AssignEngineer.objects.get(id=id)
-        data_to_delete.equipment=''
-        data_to_delete.save()
-        messages.success(request,'Equipment Recived')
+def delete_equipment(request):
+   
+    if request.method=="POST":
+        id_to_get=request.POST.get('recive_id')
+        recive=request.POST.get('recive')
+        recive_date=datetime.datetime.now().strftime('%d-%m-%Y')
+        data_to_save=AssignEngineer.objects.get(id=id_to_get)
+        data_to_save.recived_equipment=recive
+        data_to_save.recived_date=recive_date
+        data_to_save.save()
+        messages.error(request,'Recived Succesfully')
         return redirect('/equipment-page')
-    except:
-        messages.error(request,'something went wrong')
+    else:
+        messages.error(request,'Something Went Wrong')
         return redirect('/equipment-page')
 
 # home_function

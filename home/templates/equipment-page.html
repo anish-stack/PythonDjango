@@ -189,7 +189,7 @@
                                           <td>{{i.manager_name.first_name}}</td>
                                           <td>{{i.company_name}}</td> 
                                           <td>{{i.equipment}}</td>
-                                          <form method="post">
+                                          <form method="post" action="/delete-equipment/">
                                             {% csrf_token %}
                                             <input type="text" name="recive_id" value="{{i.id}}" hidden>
                                           <td>
