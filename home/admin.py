@@ -29,7 +29,7 @@ admin.site.register(AddReport,AdminAddReport)
 
 # Assign Engineer
 class AdminAssignEngineer(admin.ModelAdmin):
-    list_display=('id','company_name','manager_name','engineer_one','engineer_two','engineer_three','visit_purpose','machine_type','leave_date','reach_date','travel_by','equipment','work_status','project_link','download_link')
+    list_display=('id','company_name','manager_name','engineer_one','engineer_two','engineer_three','visit_purpose','machine_type','leave_date','reach_date','travel_by','equipment','work_status','project_link','download_link','recived_equipment','recived_date')
 admin.site.register(AssignEngineer,AdminAssignEngineer)
 
 

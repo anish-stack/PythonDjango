@@ -20,17 +20,34 @@ import os
 
 
 # home_function
+# @login_required(login_url='/login')
+# def equipment_view(request):
+#     equipment_object=AssignEngineer.objects.all()
+
+#     equipment_data=[]
+#     for i in equipment_object:
+#         if i.equipment is not None and i.equipment !='':
+#             equipment_data.append(i)
+        
+
+#     return render(request,'equipment-page.html',{'equipment_data':equipment_data})
+
 @login_required(login_url='/login')
 def equipment_view(request):
     equipment_object=AssignEngineer.objects.all()
 
+        
     equipment_data=[]
     for i in equipment_object:
         if i.equipment is not None and i.equipment !='':
             equipment_data.append(i)
-        
 
-    return render(request,'equipment-page.html',{'equipment_data':equipment_data})
+    recived_equipment=[]
+    for j in equipment_object:
+        if j.recived_equipment is not None and j.equipment !='':
+            equipment_data.append(j)
+
+    return render(request,'equipment-page.html',{'equipment_data':equipment_data,'recived_equipment':recived_equipment})
 
 # home_function
 @login_required(login_url='/login')
