@@ -191,12 +191,12 @@
                                           <td>{{i.equipment}}</td>
                                           <form method="post">
                                             {% csrf_token %}
-                                            <input type="text" value="{{i.id}}" hidden>
+                                            <input type="text" name="recive_id" value="{{i.id}}" hidden>
                                           <td>
-                                            <textarea class="form-control" name="recive" placeholder="Enter Equipments" id="floatingTextarea"></textarea>
+                                            <textarea class="form-control" name="recive_id" placeholder="Enter Equipments" id="floatingTextarea"></textarea>
                                           </td>
                                           <td class="receive-btn">
-                                            <button >Recive Now <i class="fa-solid fa-circle-check"></i></button>
+                                            <button >Recive Now</button>
                                           </td>
                                         </form>
                                         </tr>

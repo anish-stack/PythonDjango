@@ -1142,11 +1142,13 @@ td .fa-download.ii{
 }
 
 
-table .receive-btn a{
+table .receive-btn button{
   background: var(--color-green);
   color: white;
   padding: 5px 10px;
   border-radius: 5px;
+  border: 0px;
+  outline: none;
 }
 
 
