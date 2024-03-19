@@ -97,7 +97,7 @@ urlpatterns = [
     path('page-not-found',ForZeroFor),
     
     path('equipment-page/',equipment_view),
-    path('delete-equipment/<id>/',delete_equipment),
+    path('delete-equipment/',delete_equipment),
  ]
 
 
