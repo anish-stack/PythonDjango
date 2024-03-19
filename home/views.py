@@ -39,13 +39,16 @@ def equipment_view(request):
         
     equipment_data=[]
     for i in equipment_object:
-        if i.equipment is not None and i.equipment !='':
+        if (i.equipment is not None and i.equipment !='') and (i.recived_equipment is  None or i.recived_equipment =='') :
             equipment_data.append(i)
+    print(len(equipment_data),'was length')
+
 
     recived_equipment=[]
     for j in equipment_object:
-        if j.recived_equipment is not None and j.equipment !='':
-            equipment_data.append(j)
+        if j.recived_equipment is not None and j.recived_equipment !='':
+            recived_equipment.append(j)
+    print(len(recived_equipment),'is recived equpment')
 
     return render(request,'equipment-page.html',{'equipment_data':equipment_data,'recived_equipment':recived_equipment})
 
@@ -54,15 +57,20 @@ def equipment_view(request):
 def delete_equipment(request):
    
     if request.method=="POST":
-        id_to_get=request.POST.get('recive_id')
-        recive=request.POST.get('recive')
-        recive_date=datetime.datetime.now().strftime('%d-%m-%Y')
-        data_to_save=AssignEngineer.objects.get(id=id_to_get)
-        data_to_save.recived_equipment=recive
-        data_to_save.recived_date=recive_date
-        data_to_save.save()
-        messages.error(request,'Recived Succesfully')
-        return redirect('/equipment-page')
+        try:
+
+            id_to_get=request.POST.get('recive_id')
+            recive=request.POST.get('recive')
+            recive_date=datetime.datetime.now().strftime('%d-%m-%Y')
+            data_to_save=AssignEngineer.objects.get(id=id_to_get)
+            data_to_save.recived_equipment=recive
+            data_to_save.recived_date=recive_date
+            data_to_save.save()
+            messages.success(request,'Recived Succesfully')
+            return redirect('/equipment-page')
+        except:
+            messages.error(request,'Something Went Wrong 2')
+            return redirect('/equipment-page')
     else:
         messages.error(request,'Something Went Wrong')
         return redirect('/equipment-page')
