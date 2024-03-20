@@ -126,13 +126,13 @@
                                     </thead>
                                     <tbody>
                                         {% for i in recived_equipment %}
-                                        <tr>
+                                        <tr style="width: 100%;">
                                           <td>{{forloop.counter}}</td>
                                           <td>{{i.leave_date}}</td> 
                                           <td>{{i.manager_name.first_name}}</td>
                                           <td>{{i.company_name}}</td> 
                                           <td>{{i.equipment}}</td>
-                                          <td>
+                                          <td style="width: 40%;">
                                             {{i.recived_equipment}}
                                           </td>
                                           <td class="receive-btn">
